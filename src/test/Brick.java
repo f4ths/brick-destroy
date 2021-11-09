@@ -43,20 +43,20 @@ abstract public class Brick {
 
         public Crack(int crackDepth, int steps) {
 
-            crack = new GeneralPath();
-            this.crackDepth = crackDepth;
-            this.steps = steps;
+            setCrack(new GeneralPath());
+            this.setCrackDepth(crackDepth);
+            this.setSteps(steps);
 
         }
 
 
         public GeneralPath draw() {
 
-            return crack;
+            return getCrack();
         }
 
         public void reset() {
-            crack.reset();
+            getCrack().reset();
         }
 
         protected void makeCrack(Point2D point, int direction) {
@@ -106,20 +106,20 @@ abstract public class Brick {
 
             path.moveTo(start.x, start.y);
 
-            double w = (end.x - start.x) / (double) steps;
-            double h = (end.y - start.y) / (double) steps;
+            double w = (end.x - start.x) / (double) getSteps();
+            double h = (end.y - start.y) / (double) getSteps();
 
-            int bound = crackDepth;
+            int bound = getCrackDepth();
             int jump = bound * 5;
 
             double x, y;
 
-            for (int i = 1; i < steps; i++) {
+            for (int i = 1; i < getSteps(); i++) {
 
                 x = (i * w) + start.x;
                 y = (i * h) + start.y + randomInBounds(bound);
 
-                if (inMiddle(i, CRACK_SECTIONS, steps))
+                if (inMiddle(i, CRACK_SECTIONS, getSteps()))
                     y += jumps(jump, JUMP_PROBABILITY);
 
                 path.lineTo(x, y);
@@ -127,7 +127,7 @@ abstract public class Brick {
             }
 
             path.lineTo(end.x, end.y);
-            crack.append(path, true);
+            getCrack().append(path, true);
         }
 
         private int randomInBounds(int bound) {
@@ -168,6 +168,29 @@ abstract public class Brick {
             return out;
         }
 
+        public GeneralPath getCrack() {
+            return crack;
+        }
+
+        public void setCrack(GeneralPath crack) {
+            this.crack = crack;
+        }
+
+        public int getCrackDepth() {
+            return crackDepth;
+        }
+
+        public void setCrackDepth(int crackDepth) {
+            this.crackDepth = crackDepth;
+        }
+
+        public int getSteps() {
+            return steps;
+        }
+
+        public void setSteps(int steps) {
+            this.steps = steps;
+        }
     }
 
     private static Random rnd;
@@ -220,13 +243,13 @@ abstract public class Brick {
         if (broken)
             return 0;
         int out = 0;
-        if (brickFace.contains(b.right))
+        if (brickFace.contains(b.getRight()))
             out = LEFT_IMPACT;
-        else if (brickFace.contains(b.left))
+        else if (brickFace.contains(b.getLeft()))
             out = RIGHT_IMPACT;
-        else if (brickFace.contains(b.up))
+        else if (brickFace.contains(b.getUp()))
             out = DOWN_IMPACT;
-        else if (brickFace.contains(b.down))
+        else if (brickFace.contains(b.getDown()))
             out = UP_IMPACT;
         return out;
     }

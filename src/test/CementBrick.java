@@ -18,9 +18,25 @@ public class CementBrick extends Brick {
 
 
     public CementBrick(Point point, Dimension size) {
-        super(NAME, point, size, DEF_BORDER, DEF_INNER, CEMENT_STRENGTH);
-        crack = new Crack(DEF_CRACK_DEPTH, DEF_STEPS);
-        brickFace = super.brickFace;
+        super(getNAME(), point, size, getDefBorder(), getDefInner(), getCementStrength());
+        setCrack(new Crack(DEF_CRACK_DEPTH, DEF_STEPS));
+        setBrickFace(super.brickFace);
+    }
+
+    public static String getNAME() {
+        return NAME;
+    }
+
+    public static Color getDefInner() {
+        return DEF_INNER;
+    }
+
+    public static Color getDefBorder() {
+        return DEF_BORDER;
+    }
+
+    public static int getCementStrength() {
+        return CEMENT_STRENGTH;
     }
 
     @Override
@@ -34,7 +50,7 @@ public class CementBrick extends Brick {
             return false;
         super.impact();
         if (!super.isBroken()) {
-            crack.makeCrack(point, dir);
+            getCrack().makeCrack(point, dir);
             updateBrick();
             return false;
         }
@@ -44,20 +60,36 @@ public class CementBrick extends Brick {
 
     @Override
     public Shape getBrick() {
-        return brickFace;
+        return getBrickFace();
     }
 
     private void updateBrick() {
         if (!super.isBroken()) {
-            GeneralPath gp = crack.draw();
+            GeneralPath gp = getCrack().draw();
             gp.append(super.brickFace, false);
-            brickFace = gp;
+            setBrickFace(gp);
         }
     }
 
     public void repair() {
         super.repair();
-        crack.reset();
-        brickFace = super.brickFace;
+        getCrack().reset();
+        setBrickFace(super.brickFace);
+    }
+
+    public Crack getCrack() {
+        return crack;
+    }
+
+    public void setCrack(Crack crack) {
+        this.crack = crack;
+    }
+
+    public Shape getBrickFace() {
+        return brickFace;
+    }
+
+    public void setBrickFace(Shape brickFace) {
+        this.brickFace = brickFace;
     }
 }

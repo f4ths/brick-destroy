@@ -2,7 +2,6 @@ package test;
 
 import java.awt.*;
 import java.awt.Point;
-import java.awt.geom.Point2D;
 
 
 /**
@@ -17,7 +16,23 @@ public class ClayBrick extends Brick {
 
 
     public ClayBrick(Point point, Dimension size) {
-        super(NAME, point, size, DEF_BORDER, DEF_INNER, CLAY_STRENGTH);
+        super(getNAME(), point, size, getDefBorder(), getDefInner(), getClayStrength());
+    }
+
+    public static String getNAME() {
+        return NAME;
+    }
+
+    public static Color getDefInner() {
+        return DEF_INNER;
+    }
+
+    public static Color getDefBorder() {
+        return DEF_BORDER;
+    }
+
+    public static int getClayStrength() {
+        return CLAY_STRENGTH;
     }
 
     @Override

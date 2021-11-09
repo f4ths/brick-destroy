@@ -18,8 +18,6 @@
 package test;
 
 import java.awt.*;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 
 
 public class Player {
@@ -52,7 +50,7 @@ public class Player {
     }
 
     public boolean impact(Ball b) {
-        return playerFace.contains(b.getPosition()) && playerFace.contains(b.down);
+        return playerFace.contains(b.getPosition()) && playerFace.contains(b.getDown());
     }
 
     public void move() {

@@ -37,9 +37,13 @@ abstract public class Ball {
 
 
         setBallFace(makeBall(center, radiusA, radiusB));
+        setBallColor(inner, border);
+        setSpeed(0, 0);
+    }
+
+    private void setBallColor(Color inner, Color border) {
         this.setBorder(border);
         this.setInner(inner);
-        setSpeed(0, 0);
     }
 
     private void setPoints() {

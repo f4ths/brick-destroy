@@ -30,7 +30,19 @@ public class RubberBall extends Ball {
 
 
     public RubberBall(Point2D center) {
-        super(center, DEF_RADIUS, DEF_RADIUS, DEF_INNER_COLOR, DEF_BORDER_COLOR);
+        super(center, getDefRadius(), getDefRadius(), getDefInnerColor(), getDefBorderColor());
+    }
+
+    public static Color getDefInnerColor() {
+        return DEF_INNER_COLOR;
+    }
+
+    public static int getDefRadius() {
+        return DEF_RADIUS;
+    }
+
+    public static Color getDefBorderColor() {
+        return DEF_BORDER_COLOR;
     }
 
 

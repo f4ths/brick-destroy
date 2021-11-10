@@ -27,10 +27,7 @@ abstract public class Ball {
     public Ball(Point2D center, int radiusA, int radiusB, Color inner, Color border) {
         this.setCenter(center);
 
-        setUp(new Point2D.Double());
-        setDown(new Point2D.Double());
-        setLeft(new Point2D.Double());
-        setRight(new Point2D.Double());
+        setPoints();
 
         getUp().setLocation(center.getX(), center.getY() - (radiusB / 2));
         getDown().setLocation(center.getX(), center.getY() + (radiusB / 2));
@@ -42,15 +39,21 @@ abstract public class Ball {
         setBallFace(makeBall(center, radiusA, radiusB));
         this.setBorder(border);
         this.setInner(inner);
-        speedX = 0;
-        speedY = 0;
+        setSpeed(0, 0);
+    }
+
+    private void setPoints() {
+        setUp(new Point2D.Double());
+        setDown(new Point2D.Double());
+        setLeft(new Point2D.Double());
+        setRight(new Point2D.Double());
     }
 
     protected abstract Shape makeBall(Point2D center, int radiusA, int radiusB);
 
     public void move() {
-        RectangularShape tmp = (RectangularShape) ballFace;
-        center.setLocation((center.getX() + speedX), (center.getY() + speedY));
+        RectangularShape tmp = (RectangularShape) getBallFace();
+        getCenter().setLocation((getCenter().getX() + speedX), (getCenter().getY() + speedY));
         double w = tmp.getWidth();
         double h = tmp.getHeight();
 
@@ -105,8 +108,8 @@ abstract public class Ball {
         double w = tmp.getWidth();
         double h = tmp.getHeight();
 
-        tmp.setFrame((center.getX() - (w / 2)), (center.getY() - (h / 2)), w, h);
-        ballFace = tmp;
+        tmp.setFrame((getCenter().getX() - (w / 2)), (getCenter().getY() - (h / 2)), w, h);
+        setBallFace(tmp);
     }
 
     private void setPoints(double width, double height) {

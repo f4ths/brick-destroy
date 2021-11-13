@@ -42,8 +42,7 @@ abstract public class Ball {
         ballFace = makeBall(center, radiusA, radiusB);
         this.border = border;
         this.inner = inner;
-        speedX = 0;
-        speedY = 0;
+        setSpeed(0,0);
     }
 
     protected abstract Shape makeBall(Point2D center, int radiusA, int radiusB);

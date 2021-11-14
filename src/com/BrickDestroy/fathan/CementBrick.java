@@ -1,4 +1,4 @@
-package main;
+package com.BrickDestroy.fathan;
 
 import java.awt.*;
 import java.awt.geom.GeneralPath;

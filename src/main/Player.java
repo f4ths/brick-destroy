@@ -58,6 +58,10 @@ public class Player {
         if (x < min || x > max)
             return;
         ballPoint.setLocation(x, ballPoint.getY());
+        setPlayerLocation();
+    }
+
+    private void setPlayerLocation() {
         playerFace.setLocation(ballPoint.x - (int) playerFace.getWidth() / 2, ballPoint.y);
     }
 
@@ -79,6 +83,6 @@ public class Player {
 
     public void moveTo(Point p) {
         ballPoint.setLocation(p);
-        playerFace.setLocation(ballPoint.x - (int) playerFace.getWidth() / 2, ballPoint.y);
+        setPlayerLocation();
     }
 }

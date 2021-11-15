@@ -31,11 +31,20 @@ public class Wall {
     private static final int CEMENT = 3;
 
     private Random rnd;
+
+    public Rectangle getArea() {
+        return area;
+    }
+
     private Rectangle area;
 
     Brick[] bricks;
     Ball ball;
     Player player;
+
+    public Brick[][] getLevels() {
+        return levels;
+    }
 
     private Brick[][] levels;
     private int level;

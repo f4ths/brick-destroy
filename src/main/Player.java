@@ -30,6 +30,11 @@ public class Player {
 
     private Rectangle playerFace;
     private Point ballPoint;
+
+    public int getMoveAmount() {
+        return moveAmount;
+    }
+
     private int moveAmount;
     private int min;
     private int max;

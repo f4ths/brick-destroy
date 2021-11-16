@@ -1,4 +1,4 @@
-package main;
+package com.BrickDestroy;
 
 import java.awt.*;
 import java.awt.geom.GeneralPath;

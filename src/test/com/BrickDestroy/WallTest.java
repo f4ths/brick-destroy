@@ -1,11 +1,8 @@
-package main;
+package com.BrickDestroy;
 
-import main.Player;
-import main.Wall;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
-import java.awt.geom.Point2D;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -39,7 +39,7 @@ public class Wall {
     private Rectangle area;
 
     Brick[] bricks;
-    Ball ball;
+    public Ball ball;
     Player player;
 
     public Brick[][] getLevels() {

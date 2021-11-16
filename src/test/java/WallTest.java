@@ -1,8 +1,8 @@
-package com.BrickDestroy;
-
+import com.BrickDestroy.Wall;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,8 +15,8 @@ class WallTest {
                 new Rectangle(0, 0, 600, 450),
                 30,
                 3,
-                6/2,
-                new Point(300, 430)) ;
+                6 / 2,
+                new Point(300, 430));
         return testWall;
     }
 
@@ -27,9 +27,8 @@ class WallTest {
 
         testWall.ball.setYSpeed(1);
         testWall.findImpacts();
-        assertEquals(-1,testWall.ball.getSpeedY());
+        assertEquals(-1, testWall.ball.getSpeedY());
     }
-
 /*
     @Test
     void whenBallImpactsBorderReverseBallXSpeed() {
@@ -56,7 +55,7 @@ class WallTest {
         testWall.findImpacts();
         assertEquals(29, testWall.getBrickCount());
     }
-    */
+*/
 
 }
 

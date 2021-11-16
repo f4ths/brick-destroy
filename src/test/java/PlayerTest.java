@@ -1,5 +1,4 @@
-package com.BrickDestroy;
-
+import com.BrickDestroy.Player;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;

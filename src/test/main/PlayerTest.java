@@ -15,4 +15,11 @@ class PlayerTest {
         assertEquals(-5, testPlayer.getMoveAmount());
     }
 
+    @Test
+    void testMovePlayerRight() {
+        Player testPlayer = new Player(new Point(300, 430), 150, 10, new Rectangle(0, 0, 600, 450)) ;
+        testPlayer.moveRight();
+        assertEquals(5, testPlayer.getMoveAmount());
+    }
+
 }

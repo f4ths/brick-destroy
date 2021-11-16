@@ -26,7 +26,12 @@ class PlayerTest {
         assertEquals(5, testPlayer.getMoveAmount());
     }
 
-
-
+    @Test
+    void testStopPlayer() {
+        Player testPlayer = generateTestPlayer();
+        testPlayer.moveRight();
+        testPlayer.stop();
+        assertEquals(0, testPlayer.getMoveAmount());
+    }
 
 }

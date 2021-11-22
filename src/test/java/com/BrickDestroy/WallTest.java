@@ -1,4 +1,6 @@
-import com.BrickDestroy.Wall;
+package com.BrickDestroy;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
@@ -8,27 +10,24 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class WallTest {
 
-    private Point borderPoint;
+    private Wall testWall;
+    private final Rectangle DrawArea = new Rectangle(0, 0, 600, 450);
+    private final Point BallPos = new Point (300, 430);
 
-    private Wall makeTestWall() {
-        Wall testWall = new Wall(
-                new Rectangle(0, 0, 600, 450),
-                30,
-                3,
-                6 / 2,
-                new Point(300, 430));
-        return testWall;
+    @BeforeEach
+    void setUp() {
+        testWall = new Wall(DrawArea, 30, 3, 6/2, BallPos);
     }
-
 
     @Test
     void whenBallImpactsPlayerReverseBallYSpeed() {
-        Wall testWall = makeTestWall();
 
         testWall.ball.setYSpeed(1);
         testWall.findImpacts();
         assertEquals(-1, testWall.ball.getSpeedY());
     }
+
+
 /*
     @Test
     void whenBallImpactsBorderReverseBallXSpeed() {

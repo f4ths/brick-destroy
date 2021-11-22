@@ -32,6 +32,21 @@ class WallTest {
     }
 
     @Test
+    void testHasLevel() {
+        assertTrue(testWall.hasLevel());
+    }
+
+    @Test
+    void testIsDone() {
+        assertTrue(testWall.isDone());
+    }
+
+    @Test
+    void testBallEnd() {
+        assertFalse(testWall.ballEnd());
+    }
+
+    @Test
     void whenBallImpactsPlayerReverseBallYSpeed() {
         testWall.ball.setYSpeed(1);
         testWall.findImpacts();

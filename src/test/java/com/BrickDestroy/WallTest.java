@@ -20,8 +20,13 @@ class WallTest {
     }
 
     @Test
-    void whenBallImpactsPlayerReverseBallYSpeed() {
+    void testSetBallYSpeed() {
+        testWall.setBallYSpeed(20);
+        assertEquals(20, testWall.ball.getSpeedY());
+    }
 
+    @Test
+    void whenBallImpactsPlayerReverseBallYSpeed() {
         testWall.ball.setYSpeed(1);
         testWall.findImpacts();
         assertEquals(-1, testWall.ball.getSpeedY());

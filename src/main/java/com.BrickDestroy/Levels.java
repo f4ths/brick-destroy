@@ -111,7 +111,7 @@ public class Levels {
                 out = new ClayBrick(point, size);
                 break;
             case STEEL:
-                out = new SteelBrick(point, size);
+                out = new DiamondBrick(point, size);
                 break;
             case CEMENT:
                 out = new CementBrick(point, size);

@@ -1,4 +1,6 @@
-import com.BrickDestroy.Player;
+package com.BrickDestroy;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
@@ -6,31 +8,39 @@ import java.awt.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
+    private final Point BallPoint = new Point(300, 430);
+    private final Rectangle Container = new Rectangle(0, 0, 600, 450);
+    private Player testPlayer;
 
-    private Player generateTestPlayer() {
-        return new Player(new Point(300, 430), 150, 10, new Rectangle(0, 0, 600, 450));
+    @BeforeEach
+    void setUp(){
+        testPlayer = new Player(BallPoint, 150, 10, Container);
     }
 
     @Test
     void testMovePlayerLeft() {
-        Player testPlayer = generateTestPlayer();
         testPlayer.moveLeft();
         assertEquals(-5, testPlayer.getMoveAmount());
     }
 
     @Test
     void testMovePlayerRight() {
-        Player testPlayer = generateTestPlayer();
         testPlayer.moveRight();
         assertEquals(5, testPlayer.getMoveAmount());
     }
 
     @Test
     void testStopPlayer() {
-        Player testPlayer = generateTestPlayer();
         testPlayer.moveRight();
         testPlayer.stop();
         assertEquals(0, testPlayer.getMoveAmount());
     }
+/*
+    @Test
+    void testMoveTo() {
+        final Point p = new Point(20, 20);
 
+        testPlayer.moveTo(p);
+    }
+*/
 }

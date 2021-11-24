@@ -11,6 +11,10 @@ abstract public class Ball {
 
     private Shape ballFace;
 
+    public Point2D getCenter() {
+        return center;
+    }
+
     private Point2D center;
 
     Point2D up;

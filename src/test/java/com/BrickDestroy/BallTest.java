@@ -35,6 +35,7 @@ class BallTest {
     void whenMoveAddSpeedXToCenterX() {
         testBall.moveTo(new Point (0,0));
         testBall.setSpeed(1,1);
+
         testBall.move();
 
         assertEquals(1, testBall.getCenter().getX());
@@ -44,6 +45,7 @@ class BallTest {
     void whenMoveAddSpeedYToCenterY() {
         testBall.moveTo(new Point (0,0));
         testBall.setSpeed(1,1);
+
         testBall.move();
 
         assertEquals(1, testBall.getCenter().getY());

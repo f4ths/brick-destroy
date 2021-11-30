@@ -181,10 +181,8 @@ public class Info extends JComponent implements MouseListener, MouseMotionListen
         }
     }
 
-    //*Made into a function from drawButton*/
     private void ClickBack(Graphics2D g2d, int x, int y) {
         Color tmp = g2d.getColor();
-        //g2d.setColor(CLICKED_BUTTON_COLOR);
         g2d.draw(BackButton);
         g2d.setColor(CLICKED_TEXT);
         g2d.drawString(BACK_TEXT, x, y);

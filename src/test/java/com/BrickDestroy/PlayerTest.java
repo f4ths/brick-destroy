@@ -4,7 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
-import java.awt.geom.Point2D;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,19 +19,19 @@ class PlayerTest {
 
     @Test
     void testMovePlayerLeft() {
-        testPlayer.moveLeft();
+        testPlayer.movePlayerLeft();
         assertEquals(-5, testPlayer.getMoveAmount());
     }
 
     @Test
     void testMovePlayerRight() {
-        testPlayer.moveRight();
+        testPlayer.movePLayerRight();
         assertEquals(5, testPlayer.getMoveAmount());
     }
 
     @Test
     void testStopPlayer() {
-        testPlayer.moveRight();
+        testPlayer.movePLayerRight();
         testPlayer.stop();
         assertEquals(0, testPlayer.getMoveAmount());
     }

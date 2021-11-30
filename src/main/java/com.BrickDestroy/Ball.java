@@ -38,7 +38,6 @@ abstract public class Ball {
 
         up.setLocation(center.getX(), center.getY() - (radiusB / 2));
         down.setLocation(center.getX(), center.getY() + (radiusB / 2));
-
         left.setLocation(center.getX() - (radiusA / 2), center.getY());
         right.setLocation(center.getX() + (radiusA / 2), center.getY());
 

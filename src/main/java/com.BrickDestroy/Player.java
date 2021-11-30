@@ -50,8 +50,8 @@ public class Player {
     }
 
     private Rectangle makeRectangle(int width, int height) {
-        Point p = new Point((int) (ballPoint.getX() - (width / 2)), (int) ballPoint.getY());
-        return new Rectangle(p, new Dimension(width, height));
+        Point rectanglePoint = new Point((int) (ballPoint.getX() - (width / 2)), (int) ballPoint.getY());
+        return new Rectangle(rectanglePoint, new Dimension(width, height));
     }
 
     public boolean impact(Ball b) {
@@ -59,10 +59,13 @@ public class Player {
     }
 
     public void move() {
-        double x = ballPoint.getX() + moveAmount;
-        if (x < min || x > max)
+        double ballLocation = ballPoint.getX() + moveAmount;
+        boolean ballOutOfBounds = ballLocation < min || ballLocation > max;
+
+        if (ballOutOfBounds)
             return;
-        ballPoint.setLocation(x, ballPoint.getY());
+
+        ballPoint.setLocation(ballLocation, ballPoint.getY());
         setPlayerLocation();
     }
 
@@ -70,11 +73,11 @@ public class Player {
         playerFace.setLocation(ballPoint.x - (int) playerFace.getWidth() / 2, ballPoint.y);
     }
 
-    public void moveLeft() {
+    public void movePlayerLeft() {
         moveAmount = -DEF_MOVE_AMOUNT;
     }
 
-    public void moveRight() {
+    public void movePLayerRight() {
         moveAmount = DEF_MOVE_AMOUNT;
     }
 

@@ -10,7 +10,6 @@ import java.util.Random;
  */
 abstract public class Brick {
 
-    public static final int MIN_CRACK = 1;
     public static final int DEF_CRACK_DEPTH = 1;
     public static final int DEF_STEPS = 35;
 
@@ -28,7 +27,7 @@ abstract public class Brick {
     private static Random rnd;
 
     private String name;
-    Shape brickFace;
+    private Shape brickFace;
 
     private Color border;
     private Color inner;
@@ -41,22 +40,22 @@ abstract public class Brick {
 
     public Brick(String name, Point pos, Dimension size, Color border, Color inner, int strength) {
         rnd = new Random();
-        broken = false;
+        setBroken(false);
         this.name = name;
-        brickFace = makeBrickFace(pos, size);
+        setBrickFace(makeBrickFace(pos, size));
         this.border = border;
         this.inner = inner;
-        this.fullStrength = this.strength = strength;
+        this.setFullStrength(this.setStrength(strength));
 
     }
 
     protected abstract Shape makeBrickFace(Point pos, Dimension size);
 
     public boolean setImpact(Point2D point, int dir) {
-        if (broken)
+        if (isBroken())
             return false;
         impact();
-        return broken;
+        return isBroken();
     }
 
     public abstract Shape getBrick();
@@ -72,16 +71,16 @@ abstract public class Brick {
 
 
     public final int findImpact(Ball b) {
-        if (broken)
+        if (isBroken())
             return 0;
         int out = 0;
-        if (brickFace.contains(b.right))
+        if (getBrickFace().contains(b.right))
             out = LEFT_IMPACT;
-        else if (brickFace.contains(b.left))
+        else if (getBrickFace().contains(b.left))
             out = RIGHT_IMPACT;
-        else if (brickFace.contains(b.up))
+        else if (getBrickFace().contains(b.up))
             out = DOWN_IMPACT;
-        else if (brickFace.contains(b.down))
+        else if (getBrickFace().contains(b.down))
             out = UP_IMPACT;
         return out;
     }
@@ -91,16 +90,44 @@ abstract public class Brick {
     }
 
     public void repair() {
-        broken = false;
-        strength = fullStrength;
+        setBroken(false);
+        setStrength(getFullStrength());
     }
 
     public void impact() {
-        strength--;
-        broken = (strength == 0);
+        setStrength(getStrength() - 1);
+        setBroken((getStrength() == 0));
     }
 
 
+    public void setBroken(boolean broken) {
+        this.broken = broken;
+    }
+
+    public Shape getBrickFace() {
+        return brickFace;
+    }
+
+    public void setBrickFace(Shape brickFace) {
+        this.brickFace = brickFace;
+    }
+
+    public int getStrength() {
+        return strength;
+    }
+
+    public int setStrength(int strength) {
+        this.strength = strength;
+        return strength;
+    }
+
+    public int getFullStrength() {
+        return fullStrength;
+    }
+
+    public void setFullStrength(int fullStrength) {
+        this.fullStrength = fullStrength;
+    }
 }
 
 

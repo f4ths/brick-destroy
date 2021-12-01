@@ -36,7 +36,7 @@ public class DiamondBrick extends Brick {
     public DiamondBrick(Point point, Dimension size) {
         super(NAME, point, size, DEF_BORDER, DEF_INNER, STEEL_STRENGTH);
         rnd = new Random();
-        brickFace = super.brickFace;
+        brickFace = super.getBrickFace();
     }
 
 

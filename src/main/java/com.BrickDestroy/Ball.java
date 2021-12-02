@@ -39,8 +39,8 @@ abstract public class Ball {
 
 
         ballFace = makeBall(center, radiusA, radiusB);
-        this.border = border;
-        this.inner = inner;
+        this.setBorder(border);
+        this.setInner(inner);
         setSpeed(0,0);
     }
 
@@ -81,11 +81,11 @@ abstract public class Ball {
     }
 
     public Color getBorderColor() {
-        return border;
+        return getBorder();
     }
 
     public Color getInnerColor() {
-        return inner;
+        return getInner();
     }
 
     public Point2D getCenter() {
@@ -126,5 +126,21 @@ abstract public class Ball {
 
     public void setCenter(Point2D center) {
         this.center = center;
+    }
+
+    public Color getBorder() {
+        return border;
+    }
+
+    public void setBorder(Color border) {
+        this.border = border;
+    }
+
+    public Color getInner() {
+        return inner;
+    }
+
+    public void setInner(Color inner) {
+        this.inner = inner;
     }
 }

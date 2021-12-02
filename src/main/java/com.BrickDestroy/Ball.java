@@ -32,11 +32,7 @@ abstract public class Ball {
         left = new Point2D.Double();
         right = new Point2D.Double();
 
-        up.setLocation(center.getX(), center.getY() - (radiusB / 2));
-        down.setLocation(center.getX(), center.getY() + (radiusB / 2));
-        left.setLocation(center.getX() - (radiusA / 2), center.getY());
-        right.setLocation(center.getX() + (radiusA / 2), center.getY());
-
+        setPoints(radiusA, radiusB);
 
         ballFace = makeBall(center, radiusA, radiusB);
         this.setBorder(border);
@@ -55,8 +51,29 @@ abstract public class Ball {
         tmp.setFrame((getCenter().getX() - (w / 2)), (getCenter().getY() - (h / 2)), w, h);
         setPoints(w, h);
 
-
         ballFace = tmp;
+    }
+
+    public Shape getBallFace() {
+        return ballFace;
+    }
+
+    public void moveTo(Point p) {
+        getCenter().setLocation(p);
+
+        RectangularShape tmp = (RectangularShape) ballFace;
+        double w = tmp.getWidth();
+        double h = tmp.getHeight();
+
+        tmp.setFrame((getCenter().getX() - (w / 2)), (getCenter().getY() - (h / 2)), w, h);
+        ballFace = tmp;
+    }
+
+    private void setPoints(double width, double height) {
+        up.setLocation(getCenter().getX(), getCenter().getY() - (height / 2));
+        down.setLocation(getCenter().getX(), getCenter().getY() + (height / 2));
+        left.setLocation(getCenter().getX() - (width / 2), getCenter().getY());
+        right.setLocation(getCenter().getX() + (width / 2), getCenter().getY());
     }
 
     public void setSpeed(int x, int y) {
@@ -90,29 +107,6 @@ abstract public class Ball {
 
     public Point2D getCenter() {
         return center;
-    }
-
-    public Shape getBallFace() {
-        return ballFace;
-    }
-
-    public void moveTo(Point p) {
-        getCenter().setLocation(p);
-
-        RectangularShape tmp = (RectangularShape) ballFace;
-        double w = tmp.getWidth();
-        double h = tmp.getHeight();
-
-        tmp.setFrame((getCenter().getX() - (w / 2)), (getCenter().getY() - (h / 2)), w, h);
-        ballFace = tmp;
-    }
-
-    private void setPoints(double width, double height) {
-        up.setLocation(getCenter().getX(), getCenter().getY() - (height / 2));
-        down.setLocation(getCenter().getX(), getCenter().getY() + (height / 2));
-
-        left.setLocation(getCenter().getX() - (width / 2), getCenter().getY());
-        right.setLocation(getCenter().getX() + (width / 2), getCenter().getY());
     }
 
     public int getSpeedX() {

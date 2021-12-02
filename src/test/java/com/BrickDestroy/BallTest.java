@@ -23,8 +23,8 @@ class BallTest {
         testBall = new Ball(Center, 10, 10, Inner, Border) {
             @Override
             protected Shape makeBall(Point2D center, int radiusA, int radiusB) {
-                double x = center.getX() - (radiusA / 2);
-                double y = center.getY() - (radiusB / 2);
+                double x = center.getX() - (radiusA * 0.5);
+                double y = center.getY() - (radiusB * 0.5);
 
                 return new Ellipse2D.Double(x, y, radiusA, radiusB);
             }
@@ -115,7 +115,7 @@ class BallTest {
     @Test
     void testGetPosition() {
 
-        final Point2D expectedResult = new Point(20, 20);;
+        final Point2D expectedResult = new Point(20, 20);
         final Point2D result = testBall.getCenter();
 
         assertEquals(expectedResult, result);

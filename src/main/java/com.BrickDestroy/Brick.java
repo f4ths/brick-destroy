@@ -41,10 +41,12 @@ abstract public class Brick {
     public Brick(String name, Point pos, Dimension size, Color border, Color inner, int strength) {
         rnd = new Random();
         setBroken(false);
+
         this.name = name;
+        this.setBorder(border);
+        this.setInner(inner);
+
         setBrickFace(makeBrickFace(pos, size));
-        this.border = border;
-        this.inner = inner;
         this.setFullStrength(this.setStrength(strength));
 
     }
@@ -62,11 +64,11 @@ abstract public class Brick {
 
 
     public Color getBorderColor() {
-        return border;
+        return getBorder();
     }
 
     public Color getInnerColor() {
-        return inner;
+        return getInner();
     }
 
 
@@ -99,7 +101,6 @@ abstract public class Brick {
         setBroken((getStrength() == 0));
     }
 
-
     public void setBroken(boolean broken) {
         this.broken = broken;
     }
@@ -127,6 +128,22 @@ abstract public class Brick {
 
     public void setFullStrength(int fullStrength) {
         this.fullStrength = fullStrength;
+    }
+
+    public Color getBorder() {
+        return border;
+    }
+
+    public void setBorder(Color border) {
+        this.border = border;
+    }
+
+    public Color getInner() {
+        return inner;
+    }
+
+    public void setInner(Color inner) {
+        this.inner = inner;
     }
 }
 

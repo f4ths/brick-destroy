@@ -38,8 +38,8 @@ public class Levels {
             double x = (i % brickOnLine) * brickLen;
             x = (line % 2 == 0) ? x : (x - (brickLen / 2));
             double y = (line) * brickHgt;
-
             p.setLocation(x, y);
+
             tmp[i] = makeBrick(p, brickSize, type);
 
         }
@@ -85,8 +85,8 @@ public class Levels {
             double x = posX * brickLen;
             x = (line % 2 == 0) ? x : (x - (brickLen / 2));
             double y = (line) * brickHgt;
-
             p.setLocation(x, y);
+
             boolean b = ((line % 2 == 0 && i % 2 == 0) || (line % 2 != 0 && posX > centerLeft && posX <= centerRight));
             tmp[i] = b ? makeBrick(p, brickSize, typeA) : makeBrick(p, brickSize, typeB);
         }

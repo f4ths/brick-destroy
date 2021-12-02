@@ -116,7 +116,7 @@ class BallTest {
     void testGetPosition() {
 
         final Point2D expectedResult = new Point(20, 20);;
-        final Point2D result = testBall.getPosition();
+        final Point2D result = testBall.getCenter();
 
         assertEquals(expectedResult, result);
     }

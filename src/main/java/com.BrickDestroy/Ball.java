@@ -34,35 +34,33 @@ abstract public class Ball {
 
         setPoints(radiusA, radiusB);
 
-        ballFace = makeBall(center, radiusA, radiusB);
-        this.setBorder(border);
-        this.setInner(inner);
+        setBallFace(makeBall(center, radiusA, radiusB));
+        this.setBorderColor(border);
+        this.setInnerColor(inner);
         setSpeed(0,0);
     }
 
     protected abstract Shape makeBall(Point2D center, int radiusA, int radiusB);
 
     public void move() {
-        RectangularShape tmp = (RectangularShape) ballFace;
         getCenter().setLocation((getCenter().getX() + speedX), (getCenter().getY() + speedY));
+        updateLocation();
+    }
+
+    public void moveTo(Point p) {
+        getCenter().setLocation(p);
+        updateLocation();
+    }
+
+    private void updateLocation() {
+        RectangularShape tmp = (RectangularShape) ballFace;
+
         double w = tmp.getWidth();
         double h = tmp.getHeight();
 
         tmp.setFrame((getCenter().getX() - (w / 2)), (getCenter().getY() - (h / 2)), w, h);
         setPoints(w, h);
-
-        ballFace = tmp;
-    }
-
-    public void moveTo(Point p) {
-        getCenter().setLocation(p);
-
-        RectangularShape tmp = (RectangularShape) ballFace;
-        double w = tmp.getWidth();
-        double h = tmp.getHeight();
-
-        tmp.setFrame((getCenter().getX() - (w / 2)), (getCenter().getY() - (h / 2)), w, h);
-        ballFace = tmp;
+        setBallFace(tmp);
     }
 
     private void setPoints(double width, double height) {
@@ -87,8 +85,21 @@ abstract public class Ball {
         speedY *= -1;
     }
 
-    public Shape getBallFace() {
-        return ballFace;
+
+    public void setBallFace(Shape ballFace) {
+        this.ballFace = ballFace;
+    }
+
+    public void setCenter(Point2D center) {
+        this.center = center;
+    }
+
+    public void setBorderColor(Color border) {
+        this.border = border;
+    }
+
+    public void setInnerColor(Color inner) {
+        this.inner = inner;
     }
 
     public void setXSpeed(int s) {
@@ -99,16 +110,21 @@ abstract public class Ball {
         speedY = s;
     }
 
-    public Color getBorderColor() {
-        return getBorder();
-    }
 
-    public Color getInnerColor() {
-        return getInner();
+    public Shape getBallFace() {
+        return ballFace;
     }
 
     public Point2D getCenter() {
         return center;
+    }
+
+    public Color getBorderColor() {
+        return border;
+    }
+
+    public Color getInnerColor() {
+        return inner;
     }
 
     public int getSpeedX() {
@@ -117,25 +133,5 @@ abstract public class Ball {
 
     public int getSpeedY() {
         return speedY;
-    }
-
-    public void setCenter(Point2D center) {
-        this.center = center;
-    }
-
-    public Color getBorder() {
-        return border;
-    }
-
-    public void setBorder(Color border) {
-        this.border = border;
-    }
-
-    public Color getInner() {
-        return inner;
-    }
-
-    public void setInner(Color inner) {
-        this.inner = inner;
     }
 }

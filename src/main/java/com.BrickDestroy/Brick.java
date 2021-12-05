@@ -13,16 +13,10 @@ abstract public class Brick {
     public static final int DEF_CRACK_DEPTH = 1;
     public static final int DEF_STEPS = 35;
 
-
     public static final int UP_IMPACT = 100;
     public static final int DOWN_IMPACT = 200;
     public static final int LEFT_IMPACT = 300;
     public static final int RIGHT_IMPACT = 400;
-
-
-    public static Random getRnd() {
-        return rnd;
-    }
 
     private static Random rnd;
 
@@ -41,8 +35,8 @@ abstract public class Brick {
         rnd = new Random();
         setBroken(false);
 
-        this.setBorder(border);
-        this.setInner(inner);
+        this.setBorderColor(border);
+        this.setInnerColor(inner);
 
         setBrickFace(makeBrickFace(pos, size));
         this.setFullStrength(this.setStrength(strength));
@@ -57,18 +51,6 @@ abstract public class Brick {
         impact();
         return isBroken();
     }
-
-    public abstract Shape getBrick();
-
-
-    public Color getBorderColor() {
-        return getBorder();
-    }
-
-    public Color getInnerColor() {
-        return getInner();
-    }
-
 
     public final int findImpact(Ball b) {
         if (isBroken())
@@ -85,10 +67,6 @@ abstract public class Brick {
         return out;
     }
 
-    public final boolean isBroken() {
-        return broken;
-    }
-
     public void repair() {
         setBroken(false);
         setStrength(getFullStrength());
@@ -99,20 +77,20 @@ abstract public class Brick {
         setBroken((getStrength() == 0));
     }
 
-    public void setBroken(boolean broken) {
-        this.broken = broken;
-    }
-
-    public Shape getBrickFace() {
-        return brickFace;
-    }
-
     public void setBrickFace(Shape brickFace) {
         this.brickFace = brickFace;
     }
 
-    public int getStrength() {
-        return strength;
+    public void setBorderColor(Color border) {
+        this.border = border;
+    }
+
+    public void setInnerColor(Color inner) {
+        this.inner = inner;
+    }
+
+    public void setFullStrength(int fullStrength) {
+        this.fullStrength = fullStrength;
     }
 
     public int setStrength(int strength) {
@@ -120,29 +98,43 @@ abstract public class Brick {
         return strength;
     }
 
+    public void setBroken(boolean broken) {
+        this.broken = broken;
+    }
+
+
+    public abstract Shape getBrick();
+
+    public static Random getRnd() {
+        return rnd;
+    }
+
+    public Shape getBrickFace() {
+        return brickFace;
+    }
+
+    public Color getBorderColor() {
+        return border;
+    }
+
+    public Color getInnerColor() {
+        return inner;
+    }
+
     public int getFullStrength() {
         return fullStrength;
     }
 
-    public void setFullStrength(int fullStrength) {
-        this.fullStrength = fullStrength;
+    public int getStrength() {
+        return strength;
     }
 
-    public Color getBorder() {
-        return border;
+    public final boolean isBroken() {
+        return broken;
     }
 
-    public void setBorder(Color border) {
-        this.border = border;
-    }
 
-    public Color getInner() {
-        return inner;
-    }
 
-    public void setInner(Color inner) {
-        this.inner = inner;
-    }
 }
 
 

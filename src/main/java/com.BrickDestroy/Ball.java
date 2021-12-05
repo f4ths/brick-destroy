@@ -54,10 +54,6 @@ abstract public class Ball {
         ballFace = tmp;
     }
 
-    public Shape getBallFace() {
-        return ballFace;
-    }
-
     public void moveTo(Point p) {
         getCenter().setLocation(p);
 
@@ -81,13 +77,7 @@ abstract public class Ball {
         speedY = y;
     }
 
-    public void setXSpeed(int s) {
-        speedX = s;
-    }
 
-    public void setYSpeed(int s) {
-        speedY = s;
-    }
 
     public void reverseX() {
         speedX *= -1;
@@ -95,6 +85,18 @@ abstract public class Ball {
 
     public void reverseY() {
         speedY *= -1;
+    }
+
+    public Shape getBallFace() {
+        return ballFace;
+    }
+
+    public void setXSpeed(int s) {
+        speedX = s;
+    }
+
+    public void setYSpeed(int s) {
+        speedY = s;
     }
 
     public Color getBorderColor() {
@@ -116,7 +118,6 @@ abstract public class Ball {
     public int getSpeedY() {
         return speedY;
     }
-
 
     public void setCenter(Point2D center) {
         this.center = center;

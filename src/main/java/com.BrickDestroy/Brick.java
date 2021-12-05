@@ -26,7 +26,6 @@ abstract public class Brick {
 
     private static Random rnd;
 
-    private String name;
     private Shape brickFace;
 
     private Color border;
@@ -42,7 +41,6 @@ abstract public class Brick {
         rnd = new Random();
         setBroken(false);
 
-        this.name = name;
         this.setBorder(border);
         this.setInner(inner);
 

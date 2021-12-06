@@ -18,7 +18,7 @@ public class Crack {
 
 
     private final Brick brick;
-    private GeneralPath crack;
+    private final GeneralPath crack;
 
     private int crackDepth;
     private int steps;
@@ -28,8 +28,8 @@ public class Crack {
         this.brick = brick;
 
         crack = new GeneralPath();
-        this.crackDepth = crackDepth;
-        this.steps = steps;
+        this.setCrackDepth(crackDepth);
+        this.setSteps(steps);
 
     }
 
@@ -90,20 +90,20 @@ public class Crack {
 
         path.moveTo(start.x, start.y);
 
-        double w = (end.x - start.x) / (double) steps;
-        double h = (end.y - start.y) / (double) steps;
+        double w = (end.x - start.x) / (double) getSteps();
+        double h = (end.y - start.y) / (double) getSteps();
 
-        int bound = crackDepth;
+        int bound = getCrackDepth();
         int jump = bound * 5;
 
         double x, y;
 
-        for (int i = 1; i < steps; i++) {
+        for (int i = 1; i < getSteps(); i++) {
 
             x = (i * w) + start.x;
             y = (i * h) + start.y + randomInBounds(bound);
 
-            if (inMiddle(i, CRACK_SECTIONS, steps))
+            if (inMiddle(i, CRACK_SECTIONS, getSteps()))
                 y += jumps(jump, JUMP_PROBABILITY);
 
             path.lineTo(x, y);
@@ -140,16 +140,34 @@ public class Crack {
         int pos;
 
         switch (direction) {
-            case HORIZONTAL:
+            case HORIZONTAL -> {
                 pos = Brick.getRnd().nextInt(to.x - from.x) + from.x;
                 out.setLocation(pos, to.y);
-                break;
-            case VERTICAL:
+            }
+            case VERTICAL -> {
                 pos = Brick.getRnd().nextInt(to.y - from.y) + from.y;
                 out.setLocation(to.x, pos);
-                break;
+            }
         }
         return out;
     }
+
+
+    public void setCrackDepth(int crackDepth) {
+        this.crackDepth = crackDepth;
+    }
+
+    public void setSteps(int steps) {
+        this.steps = steps;
+    }
+
+    public int getCrackDepth() {
+        return crackDepth;
+    }
+
+    public int getSteps() {
+        return steps;
+    }
+
 
 }

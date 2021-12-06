@@ -8,7 +8,7 @@
 
     <groupId>com.BrickDestroy</groupId>
     <artifactId>BrickDestroy-2</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <properties>
         <maven.compiler.source>15</maven.compiler.source>
@@ -24,7 +24,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>GraphicsMain</mainClass>
+                            <mainClass>com.BrickDestroy.GraphicsMain</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

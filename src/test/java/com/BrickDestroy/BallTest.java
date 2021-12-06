@@ -98,6 +98,7 @@ class BallTest {
     void testGetBorderColor() {
 
         final Color expectedResult = new Color(1, 1, 1, 1);
+        testBall.setBorderColor(expectedResult);
         final Color result = testBall.getBorderColor();
 
         assertEquals(expectedResult, result);
@@ -107,6 +108,7 @@ class BallTest {
     void testGetInnerColor() {
 
         final Color expectedResult = new Color(2, 2, 2, 2);
+        testBall.setInnerColor(expectedResult);
         final Color result = testBall.getInnerColor();
 
         assertEquals(expectedResult, result);

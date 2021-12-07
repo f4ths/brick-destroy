@@ -31,66 +31,104 @@ public class Player {
     private Rectangle playerFace;
     private Point ballPoint;
 
-    public int getMoveAmount() {
-        return moveAmount;
-    }
-
     private int moveAmount;
     private int min;
     private int max;
 
 
     public Player(Point ballPoint, int width, int height, Rectangle container) {
-        this.ballPoint = ballPoint;
-        moveAmount = 0;
-        playerFace = makeRectangle(width, height);
-        min = container.x + (width / 2);
-        max = min + container.width - width;
+        this.setBallPoint(ballPoint);
+        setMoveAmount(0);
+        setPlayerFace(makeRectangle(width, height));
+        setMin(container.x + (width / 2));
+        setMax(getMin() + container.width - width);
 
     }
 
     private Rectangle makeRectangle(int width, int height) {
-        Point rectanglePoint = new Point((int) (ballPoint.getX() - (width / 2)), (int) ballPoint.getY());
+        Point rectanglePoint = new Point((int) (getBallPoint().getX() - (width / 2)), (int) getBallPoint().getY());
         return new Rectangle(rectanglePoint, new Dimension(width, height));
     }
 
     public boolean impact(Ball b) {
-        return playerFace.contains(b.getCenter()) && playerFace.contains(b.down);
+        return getPlayerFace().contains(b.getCenter()) && getPlayerFace().contains(b.down);
     }
 
     public void move() {
-        double ballLocation = ballPoint.getX() + moveAmount;
-        boolean ballOutOfBounds = ballLocation < min || ballLocation > max;
+        double ballLocation = getBallPoint().getX() + moveAmount;
+        boolean ballOutOfBounds = ballLocation < getMin() || ballLocation > getMax();
 
         if (ballOutOfBounds)
             return;
 
-        ballPoint.setLocation(ballLocation, ballPoint.getY());
+        getBallPoint().setLocation(ballLocation, getBallPoint().getY());
         setPlayerLocation();
     }
 
     private void setPlayerLocation() {
-        playerFace.setLocation(ballPoint.x - (int) playerFace.getWidth() / 2, ballPoint.y);
+        getPlayerFace().setLocation(getBallPoint().x - (int) getPlayerFace().getWidth() / 2, getBallPoint().y);
     }
 
     public void movePlayerLeft() {
-        moveAmount = -DEF_MOVE_AMOUNT;
+        setMoveAmount(-DEF_MOVE_AMOUNT);
     }
 
     public void movePLayerRight() {
-        moveAmount = DEF_MOVE_AMOUNT;
+        setMoveAmount(DEF_MOVE_AMOUNT);
     }
 
     public void stop() {
-        moveAmount = 0;
+        setMoveAmount(0);
     }
 
-    public Shape getPlayerFace() {
+
+    public void moveTo(Point p) {
+        getBallPoint().setLocation(p);
+        setPlayerLocation();
+    }
+
+
+    public void setPlayerFace(Rectangle playerFace) {
+        this.playerFace = playerFace;
+    }
+
+    public void setBallPoint(Point ballPoint) {
+        this.ballPoint = ballPoint;
+    }
+
+    public void setMoveAmount(int moveAmount) {
+        this.moveAmount = moveAmount;
+    }
+
+    public void setMin(int min) {
+        this.min = min;
+    }
+
+    public void setMax(int max) {
+        this.max = max;
+    }
+
+
+    public Rectangle getPlayerFace() {
         return playerFace;
     }
 
-    public void moveTo(Point p) {
-        ballPoint.setLocation(p);
-        setPlayerLocation();
+    public Point getBallPoint() {
+        return ballPoint;
     }
+
+    public int getMoveAmount() {
+        return moveAmount;
+    }
+
+    public int getMin() {
+        return min;
+    }
+
+    public int getMax() {
+        return max;
+    }
+
+
+
 }

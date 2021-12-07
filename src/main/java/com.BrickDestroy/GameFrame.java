@@ -40,11 +40,11 @@ public class GameFrame extends JFrame implements WindowFocusListener {
 
         this.setLayout(new BorderLayout());
 
-        gameBoard = new GameBoard(this);
-        homeMenu = new HomeMenu(this, new Dimension(450, 300));
-        gameInfo = new Info(this, new Dimension(450,300));
+        setGameBoard(new GameBoard(this));
+        setHomeMenu(new HomeMenu(this, new Dimension(450, 300)));
+        setGameInfo(new Info(this, new Dimension(450,300)));
 
-        this.add(homeMenu, BorderLayout.CENTER);
+        this.add(getHomeMenu(), BorderLayout.CENTER);
 
         this.setUndecorated(true);
 
@@ -52,15 +52,15 @@ public class GameFrame extends JFrame implements WindowFocusListener {
     }
     public void BackHome(){
         this.dispose();
-        this.remove(gameInfo);
-        this.add(homeMenu, BorderLayout.CENTER);
+        this.remove(getGameInfo());
+        this.add(getHomeMenu(), BorderLayout.CENTER);
         this.setUndecorated(false);
         initialize();
     }
     public void GoToInfo(){
         this.dispose();
-        this.remove(homeMenu);
-        this.add(gameInfo, BorderLayout.CENTER);
+        this.remove(getHomeMenu());
+        this.add(getGameInfo(), BorderLayout.CENTER);
         this.setUndecorated(false);
         initialize();
     }
@@ -75,8 +75,8 @@ public class GameFrame extends JFrame implements WindowFocusListener {
 
     public void enableGameBoard() {
         this.dispose();
-        this.remove(homeMenu);
-        this.add(gameBoard, BorderLayout.CENTER);
+        this.remove(getHomeMenu());
+        this.add(getGameBoard(), BorderLayout.CENTER);
         this.setUndecorated(false);
         initialize();
         /*to avoid problems with graphics focus controller is added here*/
@@ -109,7 +109,31 @@ public class GameFrame extends JFrame implements WindowFocusListener {
     @Override
     public void windowLostFocus(WindowEvent windowEvent) {
         if (gaming)
-            gameBoard.onLostFocus();
+            getGameBoard().onLostFocus();
 
+    }
+
+    public GameBoard getGameBoard() {
+        return gameBoard;
+    }
+
+    public void setGameBoard(GameBoard gameBoard) {
+        this.gameBoard = gameBoard;
+    }
+
+    public HomeMenu getHomeMenu() {
+        return homeMenu;
+    }
+
+    public void setHomeMenu(HomeMenu homeMenu) {
+        this.homeMenu = homeMenu;
+    }
+
+    public Info getGameInfo() {
+        return gameInfo;
+    }
+
+    public void setGameInfo(Info gameInfo) {
+        this.gameInfo = gameInfo;
     }
 }

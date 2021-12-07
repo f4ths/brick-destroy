@@ -35,13 +35,13 @@ public class DebugConsole extends JDialog implements WindowListener {
 
     public DebugConsole(JFrame owner, Wall wall, GameBoard gameBoard) {
 
-        this.wall = wall;
-        this.owner = owner;
-        this.gameBoard = gameBoard;
+        this.setWall(wall);
+        this.setOwner(owner);
+        this.setGameBoard(gameBoard);
         initialize();
 
-        debugPanel = new DebugPanel(wall);
-        this.add(debugPanel, BorderLayout.CENTER);
+        setDebugPanel(new DebugPanel(wall));
+        this.add(getDebugPanel(), BorderLayout.CENTER);
 
 
         this.pack();
@@ -71,7 +71,7 @@ public class DebugConsole extends JDialog implements WindowListener {
 
     @Override
     public void windowClosing(WindowEvent windowEvent) {
-        gameBoard.repaint();
+        getGameBoard().repaint();
     }
 
     @Override
@@ -92,12 +92,42 @@ public class DebugConsole extends JDialog implements WindowListener {
     @Override
     public void windowActivated(WindowEvent windowEvent) {
         setLocation();
-        Ball b = wall.ball;
-        debugPanel.setValues(b.getSpeedX(), b.getSpeedY());
+        Ball b = getWall().ball;
+        getDebugPanel().setValues(b.getSpeedX(), b.getSpeedY());
     }
 
     @Override
     public void windowDeactivated(WindowEvent windowEvent) {
 
+    }
+
+
+    public void setOwner(JFrame owner) {
+        this.owner = owner;
+    }
+
+    public void setDebugPanel(DebugPanel debugPanel) {
+        this.debugPanel = debugPanel;
+    }
+
+    public void setGameBoard(GameBoard gameBoard) {
+        this.gameBoard = gameBoard;
+    }
+
+    public DebugPanel getDebugPanel() {
+        return debugPanel;
+    }
+
+
+    public GameBoard getGameBoard() {
+        return gameBoard;
+    }
+
+    public Wall getWall() {
+        return wall;
+    }
+
+    public void setWall(Wall wall) {
+        this.wall = wall;
     }
 }

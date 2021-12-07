@@ -29,6 +29,8 @@ public class DebugPanel extends JPanel {
 
     private static final Color DEF_BKG = Color.WHITE;
 
+    private static final int MIN = -4;
+    private static final int MAX = 4;
 
     private JSlider ballXSpeed;
     private JSlider ballYSpeed;
@@ -40,8 +42,8 @@ public class DebugPanel extends JPanel {
         JButton skipLevel = makeButton("Skip Level", e -> wall.nextLevel());
         JButton resetBalls = makeButton("Reset Balls", e -> wall.resetBallCount());
 
-        ballXSpeed = makeSlider(-4, 4, e -> wall.setBallXSpeed(ballXSpeed.getValue()));
-        ballYSpeed = makeSlider(-4, 4, e -> wall.setBallYSpeed(ballYSpeed.getValue()));
+        ballXSpeed = makeSlider(e -> wall.setBallXSpeed(ballXSpeed.getValue()));
+        ballYSpeed = makeSlider(e -> wall.setBallYSpeed(ballYSpeed.getValue()));
 
         this.add(skipLevel);
         this.add(resetBalls);
@@ -62,8 +64,8 @@ public class DebugPanel extends JPanel {
         return out;
     }
 
-    private JSlider makeSlider(int min, int max, ChangeListener e) {
-        JSlider out = new JSlider(min, max);
+    private JSlider makeSlider(ChangeListener e) {
+        JSlider out = new JSlider(MIN, MAX);
         out.setMajorTickSpacing(1);
         out.setSnapToTicks(true);
         out.setPaintTicks(true);

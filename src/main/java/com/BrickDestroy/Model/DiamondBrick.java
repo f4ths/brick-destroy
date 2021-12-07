@@ -17,8 +17,6 @@
  */
 package com.BrickDestroy.Model;
 
-import com.BrickDestroy.Model.Brick;
-
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.Random;
@@ -26,7 +24,6 @@ import java.util.Random;
 
 public class DiamondBrick extends Brick {
 
-    private static final String NAME = "Steel Brick";
     private static final Color DEF_INNER = new Color(181, 250, 253, 255);
     private static final Color DEF_BORDER = DEF_INNER.darker();
     private static final int STEEL_STRENGTH = 1;
@@ -36,7 +33,7 @@ public class DiamondBrick extends Brick {
     private final Shape brickFace;
 
     public DiamondBrick(Point point, Dimension size) {
-        super(NAME, point, size, DEF_BORDER, DEF_INNER, STEEL_STRENGTH);
+        super(point, size, DEF_BORDER, DEF_INNER, STEEL_STRENGTH);
         rnd = new Random();
         brickFace = super.getBrickFace();
     }

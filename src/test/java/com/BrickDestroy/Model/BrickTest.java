@@ -19,7 +19,7 @@ class BrickTest {
 
     @BeforeEach
     void setUp() {
-        testBrick = new Brick("name", testBrickPos, size, border, inner, 10) {
+        testBrick = new Brick(testBrickPos, size, border, inner, 10) {
             @Override
             public Shape makeBrickFace(Point pos, Dimension size) {
                 return new Rectangle(pos, size);

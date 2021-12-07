@@ -1,7 +1,5 @@
 package com.BrickDestroy.Model;
 
-import com.BrickDestroy.Model.Ball;
-
 import java.awt.*;
 import java.awt.Point;
 import java.awt.geom.Point2D;
@@ -33,7 +31,7 @@ abstract public class Brick {
     private boolean broken;
 
 
-    public Brick(String name, Point pos, Dimension size, Color border, Color inner, int strength) {
+    public Brick(Point pos, Dimension size, Color border, Color inner, int strength) {
         rnd = new Random();
         setBroken(false);
 

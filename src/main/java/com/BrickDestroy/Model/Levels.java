@@ -1,10 +1,5 @@
 package com.BrickDestroy.Model;
 
-import com.BrickDestroy.Model.Brick;
-import com.BrickDestroy.Model.CementBrick;
-import com.BrickDestroy.Model.ClayBrick;
-import com.BrickDestroy.Model.DiamondBrick;
-
 import java.awt.*;
 
 public class Levels {
@@ -115,20 +110,11 @@ public class Levels {
     }
 
     private static Brick makeBrick(Point point, Dimension size, int type) {
-        Brick out;
-        switch (type) {
-            case CLAY:
-                out = new ClayBrick(point, size);
-                break;
-            case DIAMOND:
-                out = new DiamondBrick(point, size);
-                break;
-            case CEMENT:
-                out = new CementBrick(point, size);
-                break;
-            default:
-                throw new IllegalArgumentException(String.format("Unknown Type:%d\n", type));
-        }
-        return out;
+        return switch (type) {
+            case CLAY -> new ClayBrick(point, size);
+            case DIAMOND -> new DiamondBrick(point, size);
+            case CEMENT -> new CementBrick(point, size);
+            default -> throw new IllegalArgumentException(String.format("Unknown Type:%d\n", type));
+        };
     }
 }

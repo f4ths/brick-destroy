@@ -1,4 +1,9 @@
-package com.BrickDestroy;
+package com.BrickDestroy.Model;
+
+import com.BrickDestroy.Model.Brick;
+import com.BrickDestroy.Model.CementBrick;
+import com.BrickDestroy.Model.ClayBrick;
+import com.BrickDestroy.Model.DiamondBrick;
 
 import java.awt.*;
 

@@ -15,7 +15,9 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.BrickDestroy;
+package com.BrickDestroy.Model;
+
+import com.BrickDestroy.Model.Brick;
 
 import java.awt.*;
 import java.awt.geom.Point2D;

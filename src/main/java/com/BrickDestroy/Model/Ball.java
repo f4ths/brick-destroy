@@ -1,4 +1,4 @@
-package com.BrickDestroy;
+package com.BrickDestroy.Model;
 
 import java.awt.*;
 import java.awt.geom.Point2D;

@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.BrickDestroy;
+package com.BrickDestroy.Model;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -30,9 +30,9 @@ public class Wall {
 
     private Rectangle area;
 
-    Brick[] bricks;
+    private Brick[] bricks;
     public Ball ball;
-    Player player;
+    private Player player;
 
     private Brick[][] levels;
     private int level;
@@ -65,7 +65,7 @@ public class Wall {
 
         ball.setSpeed(speedX, speedY);
 
-        player = new Player((Point) ballPos.clone(), 150, 10, drawArea);
+        setPlayer(new Player((Point) ballPos.clone(), 150, 10, drawArea));
 
         area = drawArea;
 
@@ -79,12 +79,12 @@ public class Wall {
 
 
     public void move() {
-        player.move();
+        getPlayer().move();
         ball.move();
     }
 
     public void findImpacts() {
-        if (player.impact(ball)) {
+        if (getPlayer().impact(ball)) {
             ball.reverseY();
         } else if (impactWall()) {
             /*for efficiency reverse is done into method impactWall
@@ -102,7 +102,7 @@ public class Wall {
     }
 
     private boolean impactWall() {
-        for (Brick b : bricks) {
+        for (Brick b : getBricks()) {
             switch (b.findImpact(ball)) {
                 //Vertical Impact
                 case Brick.UP_IMPACT:
@@ -142,7 +142,7 @@ public class Wall {
     }
 
     public void ballReset() {
-        player.moveTo(startPoint);
+        getPlayer().moveTo(startPoint);
         ball.moveTo(startPoint);
         int speedX, speedY;
         do {
@@ -157,9 +157,9 @@ public class Wall {
     }
 
     public void wallReset() {
-        for (Brick b : bricks)
+        for (Brick b : getBricks())
             b.repair();
-        brickCount = bricks.length;
+        brickCount = getBricks().length;
         ballCount = 3;
     }
 
@@ -172,8 +172,8 @@ public class Wall {
     }
 
     public void nextLevel() {
-        bricks = levels[level++];
-        this.brickCount = bricks.length;
+        setBricks(levels[level++]);
+        this.brickCount = getBricks().length;
     }
 
     public boolean hasLevel() {
@@ -193,4 +193,19 @@ public class Wall {
     }
 
 
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public Brick[] getBricks() {
+        return bricks;
+    }
+
+    public void setBricks(Brick[] bricks) {
+        this.bricks = bricks;
+    }
 }

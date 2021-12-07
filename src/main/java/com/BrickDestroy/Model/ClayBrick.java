@@ -1,4 +1,6 @@
-package com.BrickDestroy;
+package com.BrickDestroy.Model;
+
+import com.BrickDestroy.Model.Brick;
 
 import java.awt.*;
 import java.awt.Point;

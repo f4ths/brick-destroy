@@ -1,4 +1,6 @@
-package com.BrickDestroy;
+package com.BrickDestroy.View;
+
+import com.BrickDestroy.Controller.GameFrame;
 
 import javax.swing.*;
 import java.awt.*;

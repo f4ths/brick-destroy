@@ -1,5 +1,6 @@
-package com.BrickDestroy;
+package com.BrickDestroy.Model;
 
+import com.BrickDestroy.Model.RubberBall;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

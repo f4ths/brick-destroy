@@ -17,6 +17,12 @@
  */
 package com.BrickDestroy;
 
+import com.BrickDestroy.Controller.DebugConsole;
+import com.BrickDestroy.Model.Ball;
+import com.BrickDestroy.Model.Brick;
+import com.BrickDestroy.Model.Player;
+import com.BrickDestroy.Model.Wall;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -125,11 +131,11 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
 
         drawBall(getWall().ball, g2d);
 
-        for (Brick b : getWall().bricks)
+        for (Brick b : getWall().getBricks())
             if (!b.isBroken())
                 drawBrick(b, g2d);
 
-        drawPlayer(getWall().player, g2d);
+        drawPlayer(getWall().getPlayer(), g2d);
 
         if (showPauseMenu)
             drawMenu(g2d);
@@ -265,10 +271,10 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
     public void keyPressed(KeyEvent keyEvent) {
         switch (keyEvent.getKeyCode()) {
             case KeyEvent.VK_A:
-                getWall().player.movePlayerLeft();
+                getWall().getPlayer().movePlayerLeft();
                 break;
             case KeyEvent.VK_D:
-                getWall().player.movePLayerRight();
+                getWall().getPlayer().movePLayerRight();
                 break;
             case KeyEvent.VK_ESCAPE:
                 showPauseMenu = !showPauseMenu;
@@ -286,13 +292,13 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
                 if (keyEvent.isAltDown() && keyEvent.isShiftDown())
                     getDebugConsole().setVisible(true);
             default:
-                getWall().player.stop();
+                getWall().getPlayer().stop();
         }
     }
 
     @Override
     public void keyReleased(KeyEvent keyEvent) {
-        getWall().player.stop();
+        getWall().getPlayer().stop();
     }
 
     @Override

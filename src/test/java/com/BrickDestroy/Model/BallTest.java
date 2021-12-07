@@ -1,4 +1,4 @@
-package com.BrickDestroy;
+package com.BrickDestroy.Model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

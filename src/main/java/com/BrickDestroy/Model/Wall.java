@@ -24,8 +24,6 @@ import java.util.Random;
 
 public class Wall {
 
-
-
     private Random rnd;
 
     private Rectangle area;

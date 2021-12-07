@@ -22,23 +22,17 @@ public class Info extends JComponent implements MouseListener, MouseMotionListen
     private static final String BACK_TEXT = "BACK";
 
 
-    // private static final Color BG_COLOR = Color.GREEN.darker();
-    private static final Color BORDER_COLOR = new Color(200, 8, 21); //Venetian Red
-    private static final Color DASH_BORDER_COLOR = new Color(255, 216, 0);//school bus yellow
     private static final Color TEXT_COLOR = new Color(255, 253, 121);//gold
-    //private static final Color CLICKED_BUTTON_COLOR = BG_COLOR.brighter();
     private static final Color CLICKED_TEXT = Color.WHITE;
-    private static final int BORDER_SIZE = 0;
-    private static final float[] DASHES = {12, 6};
 
-    private Rectangle menuFace;
-    private Rectangle BackButton;
+    private final Rectangle menuFace;
+    private final Rectangle BackButton;
 
-    private Font instructionFont;
-    private Font gameTitleFont;
-    private Font buttonFont;
+    private final Font instructionFont;
+    private final Font gameTitleFont;
+    private final Font buttonFont;
 
-    private GameFrame owner;
+    private final GameFrame owner;
 
     private boolean BackClicked;
 

@@ -80,6 +80,11 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
         //initialize the first level
         getWall().nextLevel();
 
+        setGameTimer();
+
+    }
+
+    private void setGameTimer() {
         gameTimer = new Timer(10, e -> {
             getWall().move();
             getWall().findImpacts();
@@ -106,7 +111,6 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
 
             repaint();
         });
-
     }
 
 

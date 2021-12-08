@@ -40,6 +40,9 @@ public class Wall {
     private int ballCount;
     private boolean ballLost;
 
+    private int score;
+    private int indexBrickBroken = 0;
+
     public Wall(Rectangle drawArea, int brickCount, int lineCount, double brickDimensionRatio, Point ballPos) {
 
         this.startPoint = new Point(ballPos);
@@ -89,6 +92,7 @@ public class Wall {
              * because for every brick program checks for horizontal and vertical impacts
              */
             brickCount--;
+            addScore();
         } else if (impactBorder()) {
             ball.reverseX();
         } else if (ball.getCenter().getY() < area.getY()) {
@@ -99,25 +103,47 @@ public class Wall {
         }
     }
 
+    private void addScore(){
+
+        String checkBrickType = bricks[indexBrickBroken].getClass().getName();
+        switch (checkBrickType) {
+            case "com.BrickDestroy.Model.ClayBrick" -> score++;
+            case "com.BrickDestroy.Model.CementBrick" -> score += 2;
+            case "com.BrickDestroy.Model.SteelBrick" -> score += 3;
+        }
+
+        setScore(score);
+    }
+
     private boolean impactWall() {
-        for (Brick b : getBricks()) {
+        for (int x = 0; x < bricks.length; x++) {
+
+            Brick b = bricks[x];
+            //Vertical Impact
+            //Horizontal Impact
             switch (b.findImpact(ball)) {
-                //Vertical Impact
-                case Brick.UP_IMPACT:
+                case Brick.UP_IMPACT -> {
                     ball.reverseY();
                     return b.setImpact(ball.down, Crack.UP);
-                case Brick.DOWN_IMPACT:
+                }
+                case Brick.DOWN_IMPACT -> {
                     ball.reverseY();
                     return b.setImpact(ball.up, Crack.DOWN);
-
-                //Horizontal Impact
-                case Brick.LEFT_IMPACT:
+                }
+                case Brick.LEFT_IMPACT -> {
                     ball.reverseX();
                     return b.setImpact(ball.right, Crack.RIGHT);
-                case Brick.RIGHT_IMPACT:
+                }
+                case Brick.RIGHT_IMPACT -> {
                     ball.reverseX();
                     return b.setImpact(ball.left, Crack.LEFT);
+                }
             }
+            indexBrickBroken = x;
+            indexBrickBroken --;
+
+            if(indexBrickBroken == -1)
+                indexBrickBroken = 0;
         }
         return false;
     }
@@ -205,5 +231,13 @@ public class Wall {
 
     public void setBricks(Brick[] bricks) {
         this.bricks = bricks;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }

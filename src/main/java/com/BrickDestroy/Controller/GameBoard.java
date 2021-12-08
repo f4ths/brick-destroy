@@ -15,9 +15,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.BrickDestroy;
+package com.BrickDestroy.Controller;
 
-import com.BrickDestroy.Controller.DebugConsole;
 import com.BrickDestroy.Model.Ball;
 import com.BrickDestroy.Model.Brick;
 import com.BrickDestroy.Model.Player;
@@ -49,6 +48,7 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
     private Wall wall;
 
     private String message;
+    private String scoreCount;
 
     private boolean showPauseMenu;
 
@@ -74,6 +74,7 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
 
         this.initialize();
         message = "";
+        scoreCount = "";
         setWall(new Wall(new Rectangle(0, 0, DEF_WIDTH, DEF_HEIGHT), 30, 3, 6 * 0.5, new Point(300, 430)));
 
         setDebugConsole(new DebugConsole(owner, getWall(), this));
@@ -88,6 +89,7 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
         gameTimer = new Timer(10, e -> {
             getWall().move();
             getWall().findImpacts();
+            scoreCount = "Score: ";
             message = String.format("Bricks: %d Balls %d", getWall().getBrickCount(), getWall().getBallCount());
             if (getWall().isBallLost()) {
                 if (getWall().ballEnd()) {
@@ -123,6 +125,13 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
         this.addMouseMotionListener(this);
     }
 
+    private void showScore(Graphics g){
+        int score = wall.getScore();
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("serif", Font.PLAIN,14));
+        g.drawString(String.valueOf(score),550,420);
+    }
+
 
     public void paint(Graphics g) {
 
@@ -131,9 +140,13 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
         clear(g2d);
 
         g2d.setColor(Color.WHITE);
-        g2d.drawString(message, 10, 400);
+        g2d.drawString(message, 10, 420);
 
+        g2d.setColor(Color.WHITE);
+        g2d.drawString(scoreCount, 510, 420);
         drawBall(getWall().ball, g2d);
+
+        showScore(g2d);
 
         for (Brick b : getWall().getBricks())
             if (!b.isBroken())

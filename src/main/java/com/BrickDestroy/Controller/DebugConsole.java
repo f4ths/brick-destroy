@@ -17,7 +17,6 @@
  */
 package com.BrickDestroy.Controller;
 
-import com.BrickDestroy.GameBoard;
 import com.BrickDestroy.Model.Ball;
 import com.BrickDestroy.Model.Wall;
 

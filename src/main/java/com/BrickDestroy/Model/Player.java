@@ -17,8 +17,6 @@
  */
 package com.BrickDestroy.Model;
 
-import com.BrickDestroy.Model.Ball;
-
 import java.awt.*;
 
 
@@ -31,7 +29,7 @@ public class Player {
     private static final int DEF_MOVE_AMOUNT = 5;
 
     private Rectangle playerFace;
-    private Point ballPoint;
+    private Point playerPoint;
 
     private int moveAmount;
     private int min;
@@ -48,7 +46,7 @@ public class Player {
     }
 
     private Rectangle makeRectangle(int width, int height) {
-        Point rectanglePoint = new Point((int) (getBallPoint().getX() - (width / 2)), (int) getBallPoint().getY());
+        Point rectanglePoint = new Point((int) (getPlayerPoint().getX() - (width / 2)), (int) getPlayerPoint().getY());
         return new Rectangle(rectanglePoint, new Dimension(width, height));
     }
 
@@ -57,18 +55,18 @@ public class Player {
     }
 
     public void move() {
-        double ballLocation = getBallPoint().getX() + moveAmount;
+        double ballLocation = getPlayerPoint().getX() + moveAmount;
         boolean ballOutOfBounds = ballLocation < getMin() || ballLocation > getMax();
 
         if (ballOutOfBounds)
             return;
 
-        getBallPoint().setLocation(ballLocation, getBallPoint().getY());
+        getPlayerPoint().setLocation(ballLocation, getPlayerPoint().getY());
         setPlayerLocation();
     }
 
     private void setPlayerLocation() {
-        getPlayerFace().setLocation(getBallPoint().x - (int) getPlayerFace().getWidth() / 2, getBallPoint().y);
+        getPlayerFace().setLocation(getPlayerPoint().x - (int) getPlayerFace().getWidth() / 2, getPlayerPoint().y);
     }
 
     public void movePlayerLeft() {
@@ -85,7 +83,7 @@ public class Player {
 
 
     public void moveTo(Point p) {
-        getBallPoint().setLocation(p);
+        getPlayerPoint().setLocation(p);
         setPlayerLocation();
     }
 
@@ -95,7 +93,7 @@ public class Player {
     }
 
     public void setBallPoint(Point ballPoint) {
-        this.ballPoint = ballPoint;
+        this.playerPoint = ballPoint;
     }
 
     public void setMoveAmount(int moveAmount) {
@@ -115,8 +113,8 @@ public class Player {
         return playerFace;
     }
 
-    public Point getBallPoint() {
-        return ballPoint;
+    public Point getPlayerPoint() {
+        return playerPoint;
     }
 
     public int getMoveAmount() {

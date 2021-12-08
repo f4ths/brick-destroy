@@ -10,8 +10,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class BrickTest {
 
 
-    private Point testBrickPos = new Point(40,40);
-    private Dimension size = new Dimension(20,10);
+    private final Point testBrickPos = new Point(40,40);
+    private final Dimension size = new Dimension(20,10);
     private final Color border = Color.GRAY;
     private final Color inner = new Color(178, 34, 34).darker();
 

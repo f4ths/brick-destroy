@@ -8,13 +8,13 @@ import java.awt.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
-    private final Point BallPoint = new Point(300, 430);
+    private final Point PlayerPoint = new Point(300, 430);
     private final Rectangle Container = new Rectangle(0, 0, 600, 450);
     private Player testPlayer;
 
     @BeforeEach
     void setUp(){
-        testPlayer = new Player(BallPoint, 150, 10, Container);
+        testPlayer = new Player(PlayerPoint, 150, 10, Container);
     }
 
     @Test
@@ -38,7 +38,7 @@ class PlayerTest {
 
     @Test
     void testImpact() {
-        final Ball b = new RubberBall(BallPoint);
+        final Ball b = new RubberBall(PlayerPoint);
 
         final boolean result = testPlayer.impact(b);
 
@@ -50,7 +50,7 @@ class PlayerTest {
         final Point p = new Point(20, 20);
 
         testPlayer.moveTo(p);
-        assertEquals(new Point(20, 20), p);
+        assertEquals(new Point(20, 20), testPlayer.getPlayerPoint());
     }
 
 }

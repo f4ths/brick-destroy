@@ -33,17 +33,18 @@ class BallTest {
 
     @Test
     void whenMoveAddSpeedXToCenterX() {
-        testBall.moveTo(new Point (0,0));
+        testBall.setCenter(new Point (0,0));
         testBall.setSpeed(1,1);
 
         testBall.move();
 
         assertEquals(1, testBall.getCenter().getX());
+        assertEquals(1, testBall.getCenter().getY());
     }
 
     @Test
     void whenMoveAddSpeedYToCenterY() {
-        testBall.moveTo(new Point (0,0));
+        testBall.setCenter(new Point (0,0));
         testBall.setSpeed(1,1);
 
         testBall.move();
@@ -95,7 +96,7 @@ class BallTest {
     }
 
     @Test
-    void testGetBorderColor() {
+    void testSetBorderColor() {
 
         final Color expectedResult = new Color(1, 1, 1, 1);
         testBall.setBorderColor(expectedResult);
@@ -105,7 +106,7 @@ class BallTest {
     }
 
     @Test
-    void testGetInnerColor() {
+    void testSetInnerColor() {
 
         final Color expectedResult = new Color(2, 2, 2, 2);
         testBall.setInnerColor(expectedResult);
@@ -115,9 +116,18 @@ class BallTest {
     }
 
     @Test
-    void testGetPosition() {
+    void testGetCenter() {
 
         final Point2D expectedResult = new Point(20, 20);
+        final Point2D result = testBall.getCenter();
+
+        assertEquals(expectedResult, result);
+    }
+
+    @Test
+    void testSetCenter() {
+        final Point2D expectedResult = new Point(10,20);
+        testBall.setCenter(new Point(10, 20));
         final Point2D result = testBall.getCenter();
 
         assertEquals(expectedResult, result);

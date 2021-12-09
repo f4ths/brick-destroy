@@ -6,7 +6,10 @@ import java.awt.geom.Point2D;
 import java.util.Random;
 
 /**
- * Created by filippo on 04/09/16.
+ * Brick is an abstract class for a brick object that defines concrete methods.
+ *
+ * @author Fathan
+ * @version 2.0
  */
 abstract public class Brick {
 
@@ -30,7 +33,15 @@ abstract public class Brick {
 
     private boolean broken;
 
-
+    /**
+     * This is the constructor for a brick object. It defines the position, size, color, and strength of a brick.
+     *
+     * @param pos
+     * @param size
+     * @param border
+     * @param inner
+     * @param strength
+     */
     public Brick(Point pos, Dimension size, Color border, Color inner, int strength) {
         rnd = new Random();
         setBroken(false);

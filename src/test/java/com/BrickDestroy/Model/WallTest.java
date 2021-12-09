@@ -47,9 +47,10 @@ class WallTest {
 
     @Test
     void whenBallImpactsPlayerReverseBallYSpeed() {
-        testWall.ball.setYSpeed(1);
+        int newSpeed = 2;
+        testWall.ball.setYSpeed(newSpeed);
         testWall.findImpacts();
-        assertEquals(-1, testWall.ball.getSpeedY());
+        assertEquals(-newSpeed, testWall.ball.getSpeedY());
     }
 
 

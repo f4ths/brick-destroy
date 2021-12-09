@@ -131,7 +131,7 @@ abstract public class Ball {
     }
 
     /**
-     * Sets the bounding space that the ball occupies.
+     * Sets the bounding area of the brick. It is the space that the ball occupies
      *
      * @param ballFace Takes in the space that the ball occupies.
      */
@@ -151,7 +151,7 @@ abstract public class Ball {
     /**
      * Sets the color of the border of the ball.
      *
-     * @param border Takes in a color.
+     * @param border Takes in a color that will be set as the border color.
      */
     public void setBorderColor(Color border) {
         this.border = border;
@@ -160,7 +160,7 @@ abstract public class Ball {
     /**
      * Sets the color of the body of the ball.
      *
-     * @param inner Takes in a color.
+     * @param inner Takes in a color that will be set as the body color.
      */
     public void setInnerColor(Color inner) {
         this.inner = inner;

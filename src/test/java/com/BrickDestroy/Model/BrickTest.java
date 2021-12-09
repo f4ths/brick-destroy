@@ -10,16 +10,17 @@ import static org.junit.jupiter.api.Assertions.*;
 class BrickTest {
 
 
-    private final Point testBrickPos = new Point(40,40);
-    private final Dimension size = new Dimension(20,10);
-    private final Color border = Color.GRAY;
-    private final Color inner = new Color(178, 34, 34).darker();
+    private final Point POS = new Point(40,40);
+    private final Dimension SIZE = new Dimension(20,10);
+    private final Color BORDER = Color.GRAY;
+    private final Color INNER = new Color(178, 34, 34).darker();
+    private final int STRENGTH = 20;
 
     private Brick testBrick;
 
     @BeforeEach
     void setUp() {
-        testBrick = new Brick(testBrickPos, size, border, inner, 10) {
+        testBrick = new Brick(POS, SIZE, BORDER, INNER, STRENGTH) {
             @Override
             public Shape makeBrickFace(Point pos, Dimension size) {
                 return new Rectangle(pos, size);
@@ -35,29 +36,29 @@ class BrickTest {
 
     @Test
     void testSetImpact() {
-        assertFalse(testBrick.setImpact(testBrickPos, 1));
+        assertFalse(testBrick.setImpact(POS, 1));
     }
 
     @Test
     void testGetBorderColor() {
-        final Color expectedResult = Color.GRAY;
+        final Color expected = Color.GRAY;
 
         final Color result = testBrick.getBorderColor();
 
-        assertEquals(expectedResult, result);
+        assertEquals(expected, result);
     }
 
     @Test
     void testGetInnerColor() {
-        final Color expectedResult = new Color(178, 34, 34).darker();
+        final Color expected = new Color(178, 34, 34).darker();
 
         final Color result = testBrick.getInnerColor();
 
-        assertEquals(expectedResult, result);
+        assertEquals(expected, result);
     }
 
     @Test
-    void testFindImpactWhenBallHitsLeftSideOfBrick() {
+    void findImpactWhenBallHitsLeftSideOfBrick() {
         Ball ball = new RubberBall(new Point(35,40));
 
         int result = testBrick.findImpact(ball);
@@ -66,7 +67,7 @@ class BrickTest {
     }
 
     @Test
-    void testFindImpactWhenBallHitsRightSideOfBrick(){
+    void findImpactWhenBallHitsRightSideOfBrick(){
         Ball ball = new RubberBall(new Point(55, 40));
 
         int result = testBrick.findImpact(ball);
@@ -75,7 +76,7 @@ class BrickTest {
     }
 
     @Test
-    void testFindImpactWhenBallHitsTopOfBrick(){
+    void findImpactWhenBallHitsTopOfBrick(){
         Ball ball = new RubberBall(new Point(45,35));
 
         int result = testBrick.findImpact(ball);
@@ -84,7 +85,7 @@ class BrickTest {
     }
 
     @Test
-    void testFindImpactWhenBallHitsBottomOfBrick(){
+    void findImpactWhenBallHitsBottomOfBrick(){
         Ball ball = new RubberBall(new Point(45, 50));
 
         int result = testBrick.findImpact(ball);
@@ -98,27 +99,23 @@ class BrickTest {
         testBrick.impact();
         testBrick.repair();
 
-        assertEquals(10, testBrick.getStrength());
+        assertEquals(STRENGTH, testBrick.getStrength());
     }
 
     @Test
-    void testImpactWhenNotAboutToBreak() {
-
+    void testImpactWhenNotBreak() {
         int expected = testBrick.getStrength() - 1;
         testBrick.impact();
 
-
         assertEquals(expected, testBrick.getStrength());
     }
 
     @Test
-    void testImpactWhenAboutToBreak() {
-
-        int expected = 0;
+    void testImpactAndBreaks() {
         testBrick.setStrength(1);
         testBrick.impact();
 
-        assertEquals(expected, testBrick.getStrength());
+        assertEquals(0, testBrick.getStrength());
     }
 
 }

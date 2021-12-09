@@ -36,11 +36,11 @@ abstract public class Brick {
     /**
      * This is the constructor for a brick object. It defines the position, size, color, and strength of a brick.
      *
-     * @param pos
-     * @param size
-     * @param border
-     * @param inner
-     * @param strength
+     * @param pos The central coordinate position of the brick.
+     * @param size The size of the brick - the area that it occupies.
+     * @param border The border color of the brick.
+     * @param inner The body color of the brick.
+     * @param strength The strength value of the brick.
      */
     public Brick(Point pos, Dimension size, Color border, Color inner, int strength) {
         rnd = new Random();
@@ -54,8 +54,24 @@ abstract public class Brick {
 
     }
 
+    /**
+     * This abstract method is overridden in brick subclasses.
+     *
+     * @see ClayBrick
+     * @see CementBrick
+     * @see DiamondBrick
+     */
     protected abstract Shape makeBrickFace(Point pos, Dimension size);
 
+    /**
+     * This method decides that a specific brick needs to be impacted or not.
+     * If the brick has already been broken, an impact does not occur.
+     * Otherwise, it impacts the ball and reduces its strength.
+     *
+     * @param point The position where the impact occurs.
+     * @param dir The direction where the impact comes from.
+     * @return Either the broken status of the ball.
+     */
     public boolean setImpact(Point2D point, int dir) {
         if (isBroken())
             return false;
@@ -63,6 +79,14 @@ abstract public class Brick {
         return isBroken();
     }
 
+    /**
+     * This method looks for impacts made by a ball on a brick.
+     * It does so by looking for whether a point of a ball occupies the same coordinate point of a brick.
+     * The point of the ball is specific to its up, down, left, or right point, which decides where the impact comes from.
+     *
+     * @param b A ball object whose points are looked at.
+     * @return The direction that the impact comes from. Otherwise, returns 0.
+     */
     public final int findImpact(Ball b) {
         if (isBroken())
             return 0;
@@ -78,42 +102,76 @@ abstract public class Brick {
         return out;
     }
 
+    /**
+     * This method resets the brick to its original state, before any impacts has been made to it.
+     * It sets the strength value of a brick to its original strength, and it sets it as not broken.
+     * It is used in the Wall class to reset the strength of bricks when a new wall is generated.
+     */
     public void repair() {
         setBroken(false);
         setStrength(getFullStrength());
     }
 
+    /**
+     * If a brick has been impacted, this method is called to decrease the strength of the brick.
+     * If the strength of the brick reaches 0 after this method, the brick is set as broken.
+     */
     public void impact() {
         setStrength(getStrength() - 1);
         setBroken((getStrength() == 0));
     }
 
+    /**
+     * Sets the bounding area of the brick. It is the space that the brick occupies.
+     * @param brickFace Takes in the space that the brick occupies.
+     */
     public void setBrickFace(Shape brickFace) {
         this.brickFace = brickFace;
     }
 
+    /**
+     * Sets the border color of the brick.
+     * @param border Takes in a color that will be set as the border color.
+     */
     public void setBorderColor(Color border) {
         this.border = border;
     }
 
+    /**
+     * Sets the body color of the brick.
+     * @param inner Takes in a color that will be set as the body color.
+     */
     public void setInnerColor(Color inner) {
         this.inner = inner;
     }
 
+    /**
+     * This method sets the brick's full strength value.
+     * @param fullStrength A brick's original strength value.
+     */
     public void setFullStrength(int fullStrength) {
         this.fullStrength = fullStrength;
     }
 
+    /**
+     * This method sets a brick's strength value.
+     * @param strength A brick's strength value.
+     */
     public int setStrength(int strength) {
         this.strength = strength;
         return strength;
     }
 
+    /**
+     * This method sets the brick's broken condition.
+     */
     public void setBroken(boolean broken) {
         this.broken = broken;
     }
 
-
+    /**
+     * This method gets a brick as an object and is called in GameBoard
+     */
     public abstract Shape getBrick();
 
     public static Random getRnd() {

@@ -17,10 +17,7 @@
  */
 package com.BrickDestroy.Controller;
 
-import com.BrickDestroy.Model.Ball;
-import com.BrickDestroy.Model.Brick;
-import com.BrickDestroy.Model.Player;
-import com.BrickDestroy.Model.Wall;
+import com.BrickDestroy.Model.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,11 +41,13 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
     private static final Color BG_COLOR = new Color(0xE60A0A0A, true);
 
     private Timer gameTimer;
+    private final CountdownTimer timer = new CountdownTimer();
 
     private Wall wall;
 
     private String message;
     private String scoreCount;
+    private String timerString;
 
     private boolean showPauseMenu;
 
@@ -75,6 +74,7 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
         this.initialize();
         message = "";
         scoreCount = "";
+        timerString = "";
         setWall(new Wall(new Rectangle(0, 0, DEF_WIDTH, DEF_HEIGHT), 30, 3, 6 * 0.5, new Point(300, 430)));
 
         setDebugConsole(new DebugConsole(owner, getWall(), this));
@@ -89,15 +89,29 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
         gameTimer = new Timer(10, e -> {
             getWall().move();
             getWall().findImpacts();
+            timerString = "Remaining Time:" + timer.getTimer();
             scoreCount = "Score: ";
             message = String.format("Bricks: %d Balls %d", getWall().getBrickCount(), getWall().getBallCount());
+
+            timer.startTimer();
+            if(timer.getTimer() == 0){
+                wall.wallReset();
+                wall.ballReset();
+                timer.resetTimer();
+                gameTimer.stop();
+                message = "Game Over";
+
+            }
+
             if (getWall().isBallLost()) {
+                timer.stopTimer();
                 if (getWall().ballEnd()) {
                     getWall().wallReset();
                     message = "Game over";
                 }
                 getWall().ballReset();
                 gameTimer.stop();
+
             } else if (getWall().isDone()) {
                 if (getWall().hasLevel()) {
                     message = "Go to Next Level";
@@ -105,6 +119,7 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
                     getWall().ballReset();
                     getWall().wallReset();
                     getWall().nextLevel();
+
                 } else {
                     message = "ALL WALLS DESTROYED";
                     gameTimer.stop();
@@ -138,6 +153,9 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
         Graphics2D g2d = (Graphics2D) g;
 
         clear(g2d);
+
+        g2d.setColor(Color.WHITE);
+        g2d.drawString(timerString,10, 400);
 
         g2d.setColor(Color.WHITE);
         g2d.drawString(message, 10, 420);

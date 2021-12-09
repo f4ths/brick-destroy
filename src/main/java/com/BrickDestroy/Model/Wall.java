@@ -119,8 +119,7 @@ public class Wall {
         for (int x = 0; x < bricks.length; x++) {
 
             Brick b = bricks[x];
-            //Vertical Impact
-            //Horizontal Impact
+
             switch (b.findImpact(ball)) {
                 case Brick.UP_IMPACT -> {
                     ball.reverseY();

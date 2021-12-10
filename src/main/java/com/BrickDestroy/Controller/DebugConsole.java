@@ -33,6 +33,7 @@ public class DebugConsole extends JDialog implements WindowListener {
     private JFrame owner;
     private DebugPanel debugPanel;
     private GameBoard gameBoard;
+    //private GameController gameController;
     private Wall wall;
 
 
@@ -133,4 +134,21 @@ public class DebugConsole extends JDialog implements WindowListener {
     public void setWall(Wall wall) {
         this.wall = wall;
     }
+/*
+    public GameController getGameController() {
+        return gameController;
+    }
+
+    public void setGameController(GameController gameController) {
+        this.gameController = gameController;
+    }
+
+    public GameBoardView getGameBoardView() {
+        return gameBoardView;
+    }
+
+    public void setGameBoardView(GameBoardView gameBoardView) {
+        this.gameBoardView = gameBoardView;
+    }
+ */
 }

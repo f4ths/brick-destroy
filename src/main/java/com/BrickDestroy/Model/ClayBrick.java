@@ -1,4 +1,4 @@
-package com.BrickDestroy.Model;
+package test;
 
 import java.awt.*;
 import java.awt.Point;
@@ -9,13 +9,30 @@ import java.awt.Point;
  */
 public class ClayBrick extends Brick {
 
+    private static final String NAME = "Clay Brick";
     private static final Color DEF_INNER = new Color(178, 34, 34).darker();
     private static final Color DEF_BORDER = Color.GRAY;
     private static final int CLAY_STRENGTH = 1;
 
 
     public ClayBrick(Point point, Dimension size) {
-        super(point, size, DEF_BORDER, DEF_INNER, CLAY_STRENGTH);
+        super(getNAME(), point, size, getDefBorder(), getDefInner(), getClayStrength());
+    }
+
+    public static String getNAME() {
+        return NAME;
+    }
+
+    public static Color getDefInner() {
+        return DEF_INNER;
+    }
+
+    public static Color getDefBorder() {
+        return DEF_BORDER;
+    }
+
+    public static int getClayStrength() {
+        return CLAY_STRENGTH;
     }
 
     @Override
@@ -25,7 +42,7 @@ public class ClayBrick extends Brick {
 
     @Override
     public Shape getBrick() {
-        return super.getBrickFace();
+        return super.brickFace;
     }
 
 

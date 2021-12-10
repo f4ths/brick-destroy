@@ -15,27 +15,48 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.BrickDestroy.Model;
+package test;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.Random;
 
 
-public class DiamondBrick extends Brick {
+public class SteelBrick extends Brick {
 
-    private static final Color DEF_INNER = new Color(181, 250, 253, 255);
-    private static final Color DEF_BORDER = DEF_INNER.darker();
+    private static final String NAME = "Steel Brick";
+    private static final Color DEF_INNER = new Color(203, 203, 201);
+    private static final Color DEF_BORDER = Color.BLACK;
     private static final int STEEL_STRENGTH = 1;
     private static final double STEEL_PROBABILITY = 0.4;
 
-    private final Random rnd;
-    private final Shape brickFace;
+    private Random rnd;
+    private Shape brickFace;
 
-    public DiamondBrick(Point point, Dimension size) {
-        super(point, size, DEF_BORDER, DEF_INNER, STEEL_STRENGTH);
-        rnd = new Random();
-        brickFace = super.getBrickFace();
+    public SteelBrick(Point point, Dimension size) {
+        super(getNAME(), point, size, getDefBorder(), getDefInner(), getSteelStrength());
+        setRnd(new Random());
+        setBrickFace(super.brickFace);
+    }
+
+    public static String getNAME() {
+        return NAME;
+    }
+
+    public static Color getDefInner() {
+        return DEF_INNER;
+    }
+
+    public static Color getDefBorder() {
+        return DEF_BORDER;
+    }
+
+    public static int getSteelStrength() {
+        return STEEL_STRENGTH;
+    }
+
+    public static double getSteelProbability() {
+        return STEEL_PROBABILITY;
     }
 
 
@@ -46,7 +67,7 @@ public class DiamondBrick extends Brick {
 
     @Override
     public Shape getBrick() {
-        return brickFace;
+        return getBrickFace();
     }
 
     public boolean setImpact(Point2D point, int dir) {
@@ -62,4 +83,19 @@ public class DiamondBrick extends Brick {
         }
     }
 
+    public Random getRnd() {
+        return rnd;
+    }
+
+    public void setRnd(Random rnd) {
+        this.rnd = rnd;
+    }
+
+    public Shape getBrickFace() {
+        return brickFace;
+    }
+
+    public void setBrickFace(Shape brickFace) {
+        this.brickFace = brickFace;
+    }
 }

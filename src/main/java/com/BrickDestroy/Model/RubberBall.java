@@ -15,7 +15,9 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package test;
+package com.BrickDestroy.Model;
+
+import com.BrickDestroy.Model.Ball;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -25,24 +27,12 @@ public class RubberBall extends Ball {
 
 
     private static final int DEF_RADIUS = 10;
-    private static final Color DEF_INNER_COLOR = new Color(255, 219, 88);
-    private static final Color DEF_BORDER_COLOR = getDefInnerColor().darker().darker();
+    private static final Color DEF_INNER_COLOR = new Color(255, 255, 255);
+    private static final Color DEF_BORDER_COLOR = DEF_INNER_COLOR.darker().darker();
 
 
     public RubberBall(Point2D center) {
-        super(center, getDefRadius(), getDefRadius(), getDefInnerColor(), getDefBorderColor());
-    }
-
-    public static Color getDefInnerColor() {
-        return DEF_INNER_COLOR;
-    }
-
-    public static int getDefRadius() {
-        return DEF_RADIUS;
-    }
-
-    public static Color getDefBorderColor() {
-        return DEF_BORDER_COLOR;
+        super(center, DEF_RADIUS, DEF_RADIUS, DEF_INNER_COLOR, DEF_BORDER_COLOR);
     }
 
 

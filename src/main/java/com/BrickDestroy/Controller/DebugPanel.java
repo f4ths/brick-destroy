@@ -24,7 +24,15 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-
+/**
+ * DebugPanel is part of the debugging window that the user may use to skip levels, reset balls, and adjust the speed of the ball.
+ * DebugPanel holds methods that deal with the buttons and sliders that the user may interact with.
+ * These buttons are sliders are contained within the DebugConsole.
+ *
+ * @author Fathan
+ * @version 2.0
+ * @see DebugConsole
+ */
 public class DebugPanel extends JPanel {
 
     private static final Color DEF_BKG = Color.WHITE;
@@ -35,6 +43,15 @@ public class DebugPanel extends JPanel {
     private JSlider ballXSpeed;
     private JSlider ballYSpeed;
 
+    /**
+     * This is the constructor for DebugPanel. It sets up the environment to draw all the necessary buttons and sliders.
+     * It takes in a wall object in order to link the buttons to perform the methods stored in Wall:
+     *      skipLevel sets the wall to the next level
+     *      resetBalls resets the ball count
+     *      ballSpeed sets the speed of the ball
+     *
+     * @param wall Takes in wall object to get the logic for the components.
+     */
     public DebugPanel(Wall wall) {
 
         initialize();
@@ -53,17 +70,26 @@ public class DebugPanel extends JPanel {
 
     }
 
+    /**
+     * Sets the color of the background and the layout of the components.
+     */
     private void initialize() {
         this.setBackground(DEF_BKG);
         this.setLayout(new GridLayout(2, 2));
     }
 
+    /**
+     * Generates a JButton that the user can interact with.
+     */
     private JButton makeButton(String title, ActionListener e) {
         JButton out = new JButton(title);
         out.addActionListener(e);
         return out;
     }
 
+    /**
+     * Generates a slider that the user can interact with.
+     */
     private JSlider makeSlider(ChangeListener e) {
         JSlider out = new JSlider(MIN, MAX);
         out.setMajorTickSpacing(1);
@@ -73,6 +99,9 @@ public class DebugPanel extends JPanel {
         return out;
     }
 
+    /**
+     * Sets the x and y value.
+     */
     public void setValues(int x, int y) {
         ballXSpeed.setValue(x);
         ballYSpeed.setValue(y);

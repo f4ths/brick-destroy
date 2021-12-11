@@ -17,30 +17,40 @@
  */
 package com.BrickDestroy.Model;
 
-import com.BrickDestroy.Model.Ball;
-
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 
+/**
+ * RubberBall is a subclass of Ball. It stores unique properties which includes its radius, inner color, and border color.
+ *
+ * @author Fathan
+ * @version 2.0
+ */
 public class RubberBall extends Ball {
-
 
     private static final int DEF_RADIUS = 10;
     private static final Color DEF_INNER_COLOR = new Color(255, 255, 255);
     private static final Color DEF_BORDER_COLOR = DEF_INNER_COLOR.darker().darker();
 
-
+    /**
+     * Constructor for RubberBall.
+     * It sets the location, radius, body color, and outer color of the ball.
+     * @param center Location of the ball as a coordinate point.
+     */
     public RubberBall(Point2D center) {
         super(center, DEF_RADIUS, DEF_RADIUS, DEF_INNER_COLOR, DEF_BORDER_COLOR);
     }
 
-
+    /**
+     * Makes a rubber ball. Logic for its center point.
+     * @return an Ellipse2D object representing the rubber ball.
+     */
     @Override
     protected Shape makeBall(Point2D center, int radiusA, int radiusB) {
 
-        double x = center.getX() - (radiusA / 2);
-        double y = center.getY() - (radiusB / 2);
+        double x = center.getX() - (radiusA * 0.5);
+        double y = center.getY() - (radiusB * 0.5);
 
         return new Ellipse2D.Double(x, y, radiusA, radiusB);
     }

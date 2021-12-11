@@ -15,7 +15,7 @@ class WallTest {
 
     @BeforeEach
     void setUp() {
-        testWall = new Wall(DrawArea, 30, 3, 6/2, BallPos);
+        testWall = new Wall(DrawArea, 30, 3, 6*0.5, BallPos);
     }
 
     @Test

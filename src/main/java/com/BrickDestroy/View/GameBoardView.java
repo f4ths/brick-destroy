@@ -1,6 +1,7 @@
 /*
 package com.BrickDestroy.View;
 
+import com.BrickDestroy.Controller.GameController;
 import com.BrickDestroy.Model.*;
 
 import javax.swing.*;
@@ -44,6 +45,13 @@ public class GameBoardView extends JComponent {
 
     public GameBoardView(Wall wall) {
         this.wall = wall;
+
+        setMessage(" ");
+        setScoreCount(" ");
+        setTimerString(" ");
+
+        paint(getGraphics());
+
     }
 
     public void paint(Graphics g) {
@@ -272,4 +280,4 @@ public class GameBoardView extends JComponent {
         this.wall = wall;
     }
 }
- */
+*/

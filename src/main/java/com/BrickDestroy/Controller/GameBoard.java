@@ -25,7 +25,17 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.font.FontRenderContext;
 
-
+/**
+ * GameBoard is the class that deals with user input logic and draws the wall object to visualise gameplay.
+ * This class also visualises the ballCount, the brickCount, the countdown timer, and the user's score.
+ * It is part of the window which is the GameFrame.
+ * I have attempted to separate this class into GameController and GameBoardView however it did not work as intended so the plan has been scrapped for now.
+ *
+ * @author Fathan
+ * @version 2.0
+ * @see GameFrame
+ * @see Wall
+ */
 public class GameBoard extends JComponent implements KeyListener, MouseListener, MouseMotionListener {
 
     private static final String CONTINUE = "Continue";
@@ -42,7 +52,7 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
     private static final Color BG_COLOR = new Color(0xE60A0A0A, true);
 
     private Timer gameTimer;
-    private final CountdownTimer timer = new CountdownTimer();
+    private final CountdownTimer countdownTimer = new CountdownTimer();
 
     private Wall wall;
 
@@ -61,7 +71,13 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
 
     private DebugConsole debugConsole;
 
-
+    /**
+     * This is the constructor for GameBoard.
+     * It initialises the gameBoard to allow user input to be made.
+     * It creates a new wall object and initialises the first level for the user to play when gameBoard is first called.
+     * Creates new debugConsole object that will be ready when the user enables it.
+     * Starts the game timer.
+     */
     public GameBoard(JFrame owner) {
         super();
 
@@ -86,26 +102,37 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
 
     }
 
+    /**
+     * This method deals with the game's timer logic.
+     * This has been separated from the constructor to de-clutter it.
+     * The timer starts as the components from wall moves, and impacts between objects are looked for.
+     * It also prints the initial ballCount, brickCount, time remaining, and user score.
+     *
+     * When the timer reaches 0, the brick, player, and ball objects are reset and the program displays a Game Over text.
+     * When no balls are remaining, Game Over text is shown.
+     * When all bricks in one level have been broken, go to the next level of bricks and reset player and ball position.
+     * When all bricks in the final level have been broken, display "All walls destroyed" and stop the game timer.
+     */
     private void setGameTimer() {
         gameTimer = new Timer(10, e -> {
             getWall().move();
             getWall().findImpacts();
-            timerString = "Remaining Time:" + timer.getTimer();
+            timerString = "Remaining Time:" + countdownTimer.getTimer();
             scoreCount = "Score: ";
             message = String.format("Bricks: %d Balls %d", getWall().getBrickCount(), getWall().getBallCount());
 
-            timer.startTimer();
-            if(timer.getTimer() == 0){
+            countdownTimer.startTimer();
+            if(countdownTimer.getTimer() == 0){
                 wall.wallReset();
                 wall.ballReset();
-                timer.resetTimer();
+                countdownTimer.resetTimer();
                 gameTimer.stop();
                 message = "Game Over";
 
             }
 
             if (getWall().isBallLost()) {
-                timer.stopTimer();
+                countdownTimer.stopTimer();
                 if (getWall().ballEnd()) {
                     getWall().wallReset();
                     message = "Game over";
@@ -131,7 +158,10 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
         });
     }
 
-
+    /**
+     * Initialises gameBoard
+     * Set dimension, request for window focus, enable user input.
+     */
     private void initialize() {
         this.setPreferredSize(new Dimension(DEF_WIDTH, DEF_HEIGHT));
         this.setFocusable(true);
@@ -141,6 +171,10 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
         this.addMouseMotionListener(this);
     }
 
+    /**
+     * Gets score from wall object and displays it.
+     * Sets the color, font, and size of the text.
+     */
     private void showScore(Graphics g){
         int score = wall.getScore();
         g.setColor(Color.WHITE);
@@ -148,7 +182,9 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
         g.drawString(String.valueOf(score),550,420);
     }
 
-
+    /**
+     * Paint method that allows the class to draw the wall and the text.
+     */
     public void paint(Graphics g) {
 
         Graphics2D g2d = (Graphics2D) g;
@@ -179,6 +215,9 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
         Toolkit.getDefaultToolkit().sync();
     }
 
+    /**
+     * Clears screen of any graphic components.
+     */
     private void clear(Graphics2D g2d) {
         Color tmp = g2d.getColor();
         g2d.setColor(BG_COLOR);
@@ -186,6 +225,10 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
         g2d.setColor(tmp);
     }
 
+    /**
+     * Method to draw and display the brick object.
+     * @param brick Brick object to be drawn.
+     */
     private void drawBrick(Brick brick, Graphics2D g2d) {
         Color tmp = g2d.getColor();
 
@@ -195,10 +238,13 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
         g2d.setColor(brick.getBorderColor());
         g2d.draw(brick.getBrick());
 
-
         g2d.setColor(tmp);
     }
 
+    /**
+     * Method to draw and display the ball object.
+     * @param ball Ball object to be drawn.
+     */
     private void drawBall(Ball ball, Graphics2D g2d) {
         Color tmp = g2d.getColor();
 
@@ -213,6 +259,10 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
         g2d.setColor(tmp);
     }
 
+    /**
+     * Method to draw and display the player object.
+     * @param p Player object to be drawn.
+     */
     private void drawPlayer(Player p, Graphics2D g2d) {
         Color tmp = g2d.getColor();
 
@@ -226,11 +276,18 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
         g2d.setColor(tmp);
     }
 
+    /**
+     * Method to draw and display home menu by hiding the gameBoard.
+     */
     private void drawMenu(Graphics2D g2d) {
         obscureGameBoard(g2d);
         drawPauseMenu(g2d);
     }
 
+    /**
+     * Obscures the gameBoard by removing from view and disabling any user inputs to the gameBoard.
+     * Called when a menu is being shown.
+     */
     private void obscureGameBoard(Graphics2D g2d) {
 
         Composite tmp = g2d.getComposite();
@@ -246,6 +303,10 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
         g2d.setColor(tmpColor);
     }
 
+    /**
+     * Method to draw and display the pause menu.
+     * The pause menu allows user to continue the game, to restart the game, or to exit the game.
+     */
     private void drawPauseMenu(Graphics2D g2d) {
         Font tmpFont = g2d.getFont();
         Color tmpColor = g2d.getColor();
@@ -299,10 +360,23 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
         g2d.setColor(tmpColor);
     }
 
+    /**
+     * Unused in game but is required to be defined to implement keyboardListener.
+     */
     @Override
     public void keyTyped(KeyEvent keyEvent) {
     }
 
+    /**
+     * Takes in user keyboard inputs when the key goes down.
+     * A moves the player to the left.
+     * D moves the player to the right.
+     * Escape displays the pause menu.
+     * Space freezes/pauses the game.
+     * Shift + Alt + F1 displays the debug window.
+     *
+     * @param keyEvent Keyboard input.
+     */
     @Override
     public void keyPressed(KeyEvent keyEvent) {
         switch (keyEvent.getKeyCode()) {
@@ -332,11 +406,24 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
         }
     }
 
+    /**
+     * When key goes up, stops player movement.
+     * @param keyEvent Keyboard input.
+     */
     @Override
     public void keyReleased(KeyEvent keyEvent) {
         getWall().getPlayer().stop();
     }
 
+    /**
+     * Takes in user mouse input when the mouse is both pressed and released.
+     * Mouse input only looked at during pause menu.
+     * When continue button is clicked, return to game.
+     * When restart button is clicked, resets the level.
+     * When exit button is clicked, exit game.
+     *
+     * @param mouseEvent Mouse input.
+     */
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         Point p = mouseEvent.getPoint();
@@ -357,6 +444,9 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
 
     }
 
+    /**
+     * Most MouseEvent methods are unused but must be defined in order to use MouseListener.
+     */
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
 
@@ -382,6 +472,10 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
 
     }
 
+    /**
+     * Switches the mouse cursor to a hand pointer when it is hovering over any clickable buttons in pause menu.
+     * @param mouseEvent Mouse cursor.
+     */
     @Override
     public void mouseMoved(MouseEvent mouseEvent) {
         Point p = mouseEvent.getPoint();
@@ -395,32 +489,62 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
         }
     }
 
+    /**
+     * Freezes the game when window is not focused on.
+     */
     public void onLostFocus() {
         gameTimer.stop();
         message = "Focus Lost";
         repaint();
     }
 
+    /**
+     * Getter for wall object.
+     *
+     * @return Current wall object.
+     */
     public Wall getWall() {
         return wall;
     }
 
+    /**
+     * Setter for wall object.
+     * @param wall Wall object to be sent as new wall.
+     */
     public void setWall(Wall wall) {
         this.wall = wall;
     }
 
+    /**
+     * Getter for menuFont.
+     *
+     * @return Current menuFont.
+     */
     public Font getMenuFont() {
         return menuFont;
     }
 
+    /**
+     * Setter for menuFont.
+     *
+     * @param menuFont menuFont to be set as the new menuFont.
+     */
     public void setMenuFont(Font menuFont) {
         this.menuFont = menuFont;
     }
 
+    /**
+     * Getter for debugConsole object.
+     * @return Current debugConsole.
+     */
     public DebugConsole getDebugConsole() {
         return debugConsole;
     }
 
+    /**
+     * Setter for debugConsole object.
+     * @param debugConsole debugConsole to be set as the new debugConsole.
+     */
     public void setDebugConsole(DebugConsole debugConsole) {
         this.debugConsole = debugConsole;
     }

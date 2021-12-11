@@ -25,10 +25,17 @@ import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+/**
+ * DebugConsole is part of the debugging window.
+ * It acts as the frame that holds the different buttons and sliders initialised by DebugPanel.
+ *
+ * @author Fathan
+ * @version 2.0
+ * @see DebugPanel
+ */
 public class DebugConsole extends JDialog implements WindowListener {
 
     private static final String TITLE = "Debug Console";
-
 
     private JFrame owner;
     private DebugPanel debugPanel;
@@ -36,7 +43,11 @@ public class DebugConsole extends JDialog implements WindowListener {
     //private GameController gameController;
     private Wall wall;
 
-
+    /**
+     * Constructor for DebugConsole.
+     * Takes in the owner, wall, and gameBoard and is called in gameBoard.
+     *
+     */
     public DebugConsole(JFrame owner, Wall wall, GameBoard gameBoard) {
 
         this.setWall(wall);
@@ -47,10 +58,12 @@ public class DebugConsole extends JDialog implements WindowListener {
         setDebugPanel(new DebugPanel(wall));
         this.add(getDebugPanel(), BorderLayout.CENTER);
 
-
         this.pack();
     }
 
+    /**
+     * Called in constructor to set the environment.
+     */
     private void initialize() {
         this.setModal(true);
         this.setTitle(TITLE);
@@ -60,39 +73,57 @@ public class DebugConsole extends JDialog implements WindowListener {
         this.setFocusable(true);
     }
 
-
+    /**
+     * Sets the location of the console.
+     */
     private void setLocation() {
         int x = ((owner.getWidth() - this.getWidth()) / 2) + owner.getX();
         int y = ((owner.getHeight() - this.getHeight()) / 2) + owner.getY();
         this.setLocation(x, y);
     }
 
-
+    /**
+     * When window is opened.
+     */
     @Override
     public void windowOpened(WindowEvent windowEvent) {
-
     }
 
+    /**
+     * When window is closing.
+     */
     @Override
     public void windowClosing(WindowEvent windowEvent) {
         getGameBoard().repaint();
     }
 
+    /**
+     * When window has closed.
+     */
     @Override
     public void windowClosed(WindowEvent windowEvent) {
 
     }
 
+    /**
+     * When window is iconified.
+     */
     @Override
     public void windowIconified(WindowEvent windowEvent) {
 
     }
 
+    /**
+     * When window is deiconified.
+     */
     @Override
     public void windowDeiconified(WindowEvent windowEvent) {
 
     }
 
+    /**
+     * Activates the window and reapplies movement of the ball.
+     */
     @Override
     public void windowActivated(WindowEvent windowEvent) {
         setLocation();
@@ -100,6 +131,9 @@ public class DebugConsole extends JDialog implements WindowListener {
         getDebugPanel().setValues(b.getSpeedX(), b.getSpeedY());
     }
 
+    /**
+     * When window is deactivated.
+     */
     @Override
     public void windowDeactivated(WindowEvent windowEvent) {
 
@@ -122,7 +156,6 @@ public class DebugConsole extends JDialog implements WindowListener {
         return debugPanel;
     }
 
-
     public GameBoard getGameBoard() {
         return gameBoard;
     }
@@ -134,6 +167,7 @@ public class DebugConsole extends JDialog implements WindowListener {
     public void setWall(Wall wall) {
         this.wall = wall;
     }
+
 /*
     public GameController getGameController() {
         return gameController;

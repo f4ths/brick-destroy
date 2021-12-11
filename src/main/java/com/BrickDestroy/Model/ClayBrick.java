@@ -5,7 +5,11 @@ import java.awt.Point;
 
 
 /**
- * Created by filippo on 04/09/16.
+ * ClayBrick is the most basic subclass of Brick. It has a strength value of 1 meaning it is broken after 1st impact.
+ *
+ * @author Fathan
+ * @version 2.0
+ * @see Brick
  */
 public class ClayBrick extends Brick {
 

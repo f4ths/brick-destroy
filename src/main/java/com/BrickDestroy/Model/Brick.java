@@ -10,6 +10,9 @@ import java.util.Random;
  *
  * @author Fathan
  * @version 2.0
+ * @see ClayBrick
+ * @see CementBrick
+ * @see DiamondBrick
  */
 abstract public class Brick {
 
@@ -70,7 +73,7 @@ abstract public class Brick {
      *
      * @param point The position where the impact occurs.
      * @param dir The direction where the impact comes from.
-     * @return Either the broken status of the ball.
+     * @return Impacts the brick if the brick has not yet been broken. If the brick has been broken, setImpact returns false.
      */
     public boolean setImpact(Point2D point, int dir) {
         if (isBroken())
@@ -170,34 +173,62 @@ abstract public class Brick {
     }
 
     /**
-     * This method gets a brick as an object and is called in GameBoard
+     * This method gets a brick as an object and is called in GameBoard.
      */
     public abstract Shape getBrick();
 
+    /**
+     *
+     * @return A random int value
+     */
     public static Random getRnd() {
         return rnd;
     }
 
+    /**
+     *
+     * @return Area that a brick occupies.
+     */
     public Shape getBrickFace() {
         return brickFace;
     }
 
+    /**
+     *
+     * @return Color of the brick's border.
+     */
     public Color getBorderColor() {
         return border;
     }
 
+    /**
+     *
+     * @return Color of the brick's body.
+     */
     public Color getInnerColor() {
         return inner;
     }
 
+    /**
+     *
+     * @return Full strength value of a brick.
+     */
     public int getFullStrength() {
         return fullStrength;
     }
 
+    /**
+     *
+     * @return Current strength value of a brick.
+     */
     public int getStrength() {
         return strength;
     }
 
+    /**
+     *
+     * @return Boolean value that determines a brick's broken status.
+     */
     public final boolean isBroken() {
         return broken;
     }

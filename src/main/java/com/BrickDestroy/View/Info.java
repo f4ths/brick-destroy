@@ -10,7 +10,14 @@ import java.awt.event.MouseMotionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 
-
+/**
+ * Info is accessed from the home menu and displays the game's controls.
+ * It was an addition that has been made to the original implementation.
+ * Acts as a menu screen similar to the home menu.
+ *
+ * @author Fathan
+ * @version 2.0
+ */
 public class Info extends JComponent implements MouseListener, MouseMotionListener {
 
     private static final String GAME_TITLE = "INSTRUCTIONS:";
@@ -36,8 +43,12 @@ public class Info extends JComponent implements MouseListener, MouseMotionListen
 
     private boolean BackClicked;
 
-
-
+    /**
+     * The constructor for Info.
+     * Initialises mouse listener.
+     * Sets the bounding boxes of buttons.
+     * Sets the font and size of texts.
+     */
     public Info(GameFrame owner, Dimension area) {
 
         this.setFocusable(true);
@@ -61,12 +72,17 @@ public class Info extends JComponent implements MouseListener, MouseMotionListen
 
     }
 
-
+    /**
+     * Allows all components of the info screen to be drawn.
+     */
     public void paint(Graphics g) {
         drawMenu((Graphics2D) g);
     }
 
-
+    /**
+     * This method tells the class how to draw the info screen.
+     * Sets up the location of the menu face and the text.
+     */
     public void drawMenu(Graphics2D g2d) {
 
         drawContainer(g2d);
@@ -88,6 +104,9 @@ public class Info extends JComponent implements MouseListener, MouseMotionListen
 
     }
 
+    /**
+     * Draws the bounding box holds the info screen.
+     */
     private void drawContainer(Graphics2D g2d) {
         //add image
         Image picture = Toolkit.getDefaultToolkit().getImage("brick.jpg");
@@ -104,6 +123,9 @@ public class Info extends JComponent implements MouseListener, MouseMotionListen
         g2d.drawImage(picture, 0, 0, this);
     }
 
+    /**
+     * Draws the text that is displayed in the info screen.
+     */
     private void drawText(Graphics2D g2d) {
 
         g2d.setColor(TEXT_COLOR);
@@ -151,6 +173,9 @@ public class Info extends JComponent implements MouseListener, MouseMotionListen
 
     }
 
+    /**
+     * Draws the buttons that the user may interact with.
+     */
     private void drawButton(Graphics2D g2d) {
 
         FontRenderContext frc = g2d.getFontRenderContext();
@@ -177,6 +202,10 @@ public class Info extends JComponent implements MouseListener, MouseMotionListen
         }
     }
 
+    /**
+     * Button that allows the user to go back.
+     * Sets the button position and draws is.
+     */
     private void ClickBack(Graphics2D g2d, int x, int y) {
         Color tmp = g2d.getColor();
         g2d.draw(BackButton);
@@ -185,8 +214,11 @@ public class Info extends JComponent implements MouseListener, MouseMotionListen
         g2d.setColor(tmp);
     }
 
-
-
+    /**
+     * Takes in user input when the mouse is both pressed and released.
+     * Returns to home screen when back button is pressed.
+     *
+     */
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         Point p = mouseEvent.getPoint();
@@ -196,6 +228,10 @@ public class Info extends JComponent implements MouseListener, MouseMotionListen
         }
     }
 
+    /**
+     * When back button is clicked, sets BackClicked is set to true and repaints the back button.
+     *
+     */
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
         Point p = mouseEvent.getPoint();
@@ -205,6 +241,9 @@ public class Info extends JComponent implements MouseListener, MouseMotionListen
         }
     }
 
+    /**
+     * When mouse is released on BackButton, sets clicked to false and repaints the back button.
+     */
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {
         if  (BackClicked) {
@@ -212,6 +251,10 @@ public class Info extends JComponent implements MouseListener, MouseMotionListen
             repaint(BackButton.x, BackButton.y, BackButton.width + 1, BackButton.height + 1);
         }
     }
+
+    /**
+     * Methods unused but needed to be defined to implement MouseEvent
+     */
     @Override
     public void mouseEntered(MouseEvent mouseEvent) {
 
@@ -228,6 +271,9 @@ public class Info extends JComponent implements MouseListener, MouseMotionListen
 
     }
 
+    /**
+     * When mouse hovers over back button, switches cursor to hand cursor.
+     */
     @Override
     public void mouseMoved(MouseEvent mouseEvent) {
         Point p = mouseEvent.getPoint();

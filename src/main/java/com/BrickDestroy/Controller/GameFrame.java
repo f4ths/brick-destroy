@@ -25,7 +25,16 @@ import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 
-
+/**
+ * GameFrame is the container for the whole game window.
+ * It adjusts the size of each screen and allows the program to switch between the home menu, info, and the game.
+ *
+ * @author Fathan
+ * @version 2.0
+ * @see GameBoard
+ * @see HomeMenu
+ * @see Info
+ */
 public class GameFrame extends JFrame implements WindowFocusListener {
 
     private static final String DEF_TITLE = "Brick Destroy";
@@ -37,6 +46,12 @@ public class GameFrame extends JFrame implements WindowFocusListener {
 
     private boolean gaming;
 
+    /**
+     * Constructor for GameFrame
+     * Sets the border layout and the dimension of the menu screens.
+     * Creates new gameBoard, home menu, and info screen.
+     * Shows the home menu as the first screen when the game is run.
+     */
     public GameFrame() {
         super();
 
@@ -51,8 +66,11 @@ public class GameFrame extends JFrame implements WindowFocusListener {
 
         this.setUndecorated(true);
 
-
     }
+
+    /**
+     * Called when user clicks the back button in the info screen to return to the home screen.
+     */
     public void BackHome(){
         this.dispose();
         this.remove(getGameInfo());
@@ -60,6 +78,10 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         this.setUndecorated(false);
         initialize();
     }
+
+    /**
+     * Called to change the menu from the home menu to the info screen.
+     */
     public void GoToInfo(){
         this.dispose();
         this.remove(getHomeMenu());
@@ -68,6 +90,9 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         initialize();
     }
 
+    /**
+     * Initialises the window.
+     */
     public void initialize() {
         this.setTitle(DEF_TITLE);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -76,6 +101,9 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         this.setVisible(true);
     }
 
+    /**
+     * Called when the user clicks play to switch the view from the home menu to the game itself.
+     */
     public void enableGameBoard() {
         this.dispose();
         this.remove(getHomeMenu());
@@ -87,6 +115,9 @@ public class GameFrame extends JFrame implements WindowFocusListener {
 
     }
 
+    /**
+     * Sizes the elements automatically.
+     */
     private void autoLocate() {
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (size.width - this.getWidth()) / 2;
@@ -95,7 +126,9 @@ public class GameFrame extends JFrame implements WindowFocusListener {
     }
 
 
-
+    /**
+     * When user clicks on the window focus is gained.
+     */
     @Override
     public void windowGainedFocus(WindowEvent windowEvent) {
         /*
@@ -109,6 +142,9 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         gaming = true;
     }
 
+    /**
+     * When user clicks outside of the window focus is lost.
+     */
     @Override
     public void windowLostFocus(WindowEvent windowEvent) {
         if (gaming)
@@ -116,38 +152,53 @@ public class GameFrame extends JFrame implements WindowFocusListener {
 
     }
 
+    /**
+     * Getter for gameBoard object
+     */
     public GameBoard getGameBoard() {
         return gameBoard;
     }
 
+    /**
+     * Setter for gameBoard object
+     */
     public void setGameBoard(GameBoard gameBoard) {
         this.gameBoard = gameBoard;
     }
 
-
+    /**
+     * Getter for homeMenu object
+     */
     public HomeMenu getHomeMenu() {
         return homeMenu;
     }
 
+    /**
+     * Setter for homeMenu object
+     */
     public void setHomeMenu(HomeMenu homeMenu) {
         this.homeMenu = homeMenu;
     }
-
+    /**
+     * Getter for gameInfo object
+     */
     public Info getGameInfo() {
         return gameInfo;
     }
-
+    /**
+     * Setter for gameInfo object
+     */
     public void setGameInfo(Info gameInfo) {
         this.gameInfo = gameInfo;
     }
-
-    /*public GameController getGameController() {
+/*
+    public GameController getGameController() {
         return gameController;
     }
 
     public void setGameController(GameController gameController) {
         this.gameController = gameController;
     }
-*/
 
+*/
 }

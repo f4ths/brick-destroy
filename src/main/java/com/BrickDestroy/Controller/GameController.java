@@ -43,18 +43,15 @@ public class GameController extends JComponent implements KeyListener, MouseList
         this.initialize();
         setWall(new Wall(new Rectangle(0, 0, DEF_WIDTH, DEF_HEIGHT), 30, 3, 6 * 0.5, new Point(300, 430)));
 
-        gameView = new GameBoardView(wall);
-        this.add(gameView);
-
-        gameView.setMessage(" ");
-        gameView.setScoreCount(" ");
-        gameView.setTimerString(" ");
-
         setDebugConsole(new DebugConsole(owner, getWall(), this));
         //initialize the first level
         getWall().nextLevel();
 
         setGameTimer();
+
+        gameView = new GameBoardView(wall);
+        this.add(gameView);
+
     }
 
 

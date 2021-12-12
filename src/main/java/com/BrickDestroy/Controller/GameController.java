@@ -63,6 +63,7 @@ public class GameController extends JComponent implements KeyListener, MouseList
                 gameView.getCountdown().resetTimer();
                 gameTimer.stop();
                 gameView.setMessage("Game Over");
+                gameView.getWall().resetScore();
 
             }
 
@@ -71,6 +72,7 @@ public class GameController extends JComponent implements KeyListener, MouseList
                 if (gameView.getWall().ballEnd()) {
                     gameView.getWall().wallReset();
                     gameView.setMessage("Game Over");
+                    gameView.getWall().resetScore();
                 }
                 gameView.getWall().ballReset();
                 gameTimer.stop();
@@ -82,6 +84,7 @@ public class GameController extends JComponent implements KeyListener, MouseList
                     gameView.getWall().ballReset();
                     gameView.getWall().wallReset();
                     gameView.getWall().nextLevel();
+                    gameView.getWall().resetScore();
 
                 } else {
                     gameView.setMessage("ALL WALLS DESTROYED");

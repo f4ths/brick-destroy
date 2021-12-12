@@ -357,4 +357,8 @@ public class Wall {
     public void setScore(int score) {
         this.score = score;
     }
+
+    public void resetScore(){
+        setScore(0);
+    }
 }

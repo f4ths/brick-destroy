@@ -1,14 +1,14 @@
-/*
+
 package com.BrickDestroy.View;
 
-import com.BrickDestroy.Controller.GameController;
+import com.BrickDestroy.Controller.DebugConsole;
 import com.BrickDestroy.Model.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.font.FontRenderContext;
 
-public class GameBoardView extends JComponent {
+public class GameView extends JComponent {
 
     private static final String CONTINUE = "Continue";
     private static final String RESTART = "Restart";
@@ -28,11 +28,9 @@ public class GameBoardView extends JComponent {
     private String scoreCount;
     private String timerString;
 
-    private boolean showPauseMenu;
+    private final CountdownTimer countdown = new CountdownTimer();
 
-    public void setMenuFont(Font menuFont) {
-        this.menuFont = menuFont;
-    }
+    private boolean showPauseMenu;
 
     private Font menuFont;
 
@@ -41,17 +39,32 @@ public class GameBoardView extends JComponent {
     private Rectangle restartButtonRect;
     private int strLen;
 
-    private GameController gameController;
+    private DebugConsole debugConsole;
 
-    public GameBoardView(Wall wall) {
-        this.wall = wall;
+    public GameView(JFrame owner) {
+        super();
+
+        strLen = 0;
+        setShowPauseMenu(false);
+        setMenuFont(new Font("Monospaced", Font.PLAIN, TEXT_SIZE));
+
+        setWall(new Wall(new Rectangle(0, 0, getDefWidth(), getDefHeight()), 30, 3, 6 * 0.5, new Point(300, 430)));
 
         setMessage(" ");
         setScoreCount(" ");
         setTimerString(" ");
 
-        paint(getGraphics());
+        setDebugConsole(new DebugConsole(owner, wall, this));
+        wall.nextLevel();
 
+    }
+
+    public static int getDefWidth() {
+        return DEF_WIDTH;
+    }
+
+    public static int getDefHeight() {
+        return DEF_HEIGHT;
     }
 
     public void paint(Graphics g) {
@@ -68,24 +81,25 @@ public class GameBoardView extends JComponent {
 
         g2d.setColor(Color.WHITE);
         g2d.drawString(getScoreCount(), 510, 420);
-        drawBall(gameController.getWall().ball, g2d);
+
+        drawBall(getWall().ball, g2d);
 
         showScore(g2d);
 
-        for (Brick b : gameController.getWall().getBricks())
+        for (Brick b : getWall().getBricks())
             if (!b.isBroken())
                 drawBrick(b, g2d);
 
-        drawPlayer(gameController.getWall().getPlayer(), g2d);
+        drawPlayer(getWall().getPlayer(), g2d);
 
-        if (showPauseMenu)
+        if (isShowPauseMenu())
             drawMenu(g2d);
 
         Toolkit.getDefaultToolkit().sync();
     }
 
     private void showScore(Graphics g){
-        int score = gameController.getWall().getScore();
+        int score = getWall().getScore();
         g.setColor(Color.WHITE);
         g.setFont(new Font("serif", Font.PLAIN,14));
         g.drawString(String.valueOf(score),550,420);
@@ -94,7 +108,7 @@ public class GameBoardView extends JComponent {
     private void clear(Graphics2D g2d) {
         Color tmp = g2d.getColor();
         g2d.setColor(BG_COLOR);
-        g2d.fillRect(0, 0, gameController.getWidth(), gameController.getHeight());
+        g2d.fillRect(0, 0, getWidth(), getHeight());
         g2d.setColor(tmp);
     }
 
@@ -106,7 +120,6 @@ public class GameBoardView extends JComponent {
 
         g2d.setColor(brick.getBorderColor());
         g2d.draw(brick.getBrick());
-
 
         g2d.setColor(tmp);
     }
@@ -152,7 +165,7 @@ public class GameBoardView extends JComponent {
         g2d.setComposite(ac);
 
         g2d.setColor(Color.BLACK);
-        g2d.fillRect(0, 0, DEF_WIDTH, DEF_HEIGHT);
+        g2d.fillRect(0, 0, getDefWidth(), getDefHeight());
 
         g2d.setComposite(tmp);
         g2d.setColor(tmpColor);
@@ -171,13 +184,13 @@ public class GameBoardView extends JComponent {
             setStrLen(getMenuFont().getStringBounds(PAUSE, frc).getBounds().width);
         }
 
-        int x = (this.gameController.getWidth() - getStrLen()) / 2;
-        int y = this.gameController.getHeight() / 10;
+        int x = (this.getWidth() - getStrLen()) / 2;
+        int y = this.getHeight() / 10;
 
         g2d.drawString(PAUSE, x, y);
 
-        x = this.gameController.getWidth() / 8;
-        y = this.gameController.getHeight() / 4;
+        x = this.getWidth() / 8;
+        y = this.getHeight() / 4;
 
 
         if (getContinueButtonRect() == null) {
@@ -279,5 +292,29 @@ public class GameBoardView extends JComponent {
     public void setWall(Wall wall) {
         this.wall = wall;
     }
+
+    public void setMenuFont(Font menuFont) {
+        this.menuFont = menuFont;
+    }
+
+    public DebugConsole getDebugConsole() {
+        return debugConsole;
+    }
+
+    public void setDebugConsole(DebugConsole debugConsole) {
+        this.debugConsole = debugConsole;
+    }
+
+    public boolean isShowPauseMenu() {
+        return showPauseMenu;
+    }
+
+    public void setShowPauseMenu(boolean showPauseMenu) {
+        this.showPauseMenu = showPauseMenu;
+    }
+
+
+    public CountdownTimer getCountdown() {
+        return countdown;
+    }
 }
-*/

@@ -15,10 +15,9 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.BrickDestroy.Controller;
+package com.BrickDestroy.View;
 
-import com.BrickDestroy.View.HomeMenu;
-import com.BrickDestroy.View.Info;
+import com.BrickDestroy.Controller.GameController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,7 +30,6 @@ import java.awt.event.WindowFocusListener;
  *
  * @author Fathan
  * @version 2.0
- * @see GameBoard
  * @see HomeMenu
  * @see Info
  */
@@ -39,8 +37,8 @@ public class GameFrame extends JFrame implements WindowFocusListener {
 
     private static final String DEF_TITLE = "Brick Destroy";
 
-    private GameBoard gameBoard;
-    //private GameController gameController;
+    private GameView gameView;
+    private GameController gameController;
     private HomeMenu homeMenu;
     private Info gameInfo;
 
@@ -58,7 +56,8 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         gaming = false;
 
         this.setLayout(new BorderLayout());
-        setGameBoard(new GameBoard(this));
+        gameView = new GameView(this);
+        gameController = new GameController(this, gameView);
         setHomeMenu(new HomeMenu(this, new Dimension(450, 300)));
         setGameInfo(new Info(this, new Dimension(450,300)));
 
@@ -107,7 +106,8 @@ public class GameFrame extends JFrame implements WindowFocusListener {
     public void enableGameBoard() {
         this.dispose();
         this.remove(getHomeMenu());
-        this.add(getGameBoard(), BorderLayout.CENTER);
+        this.add(gameController);
+        this.add(gameView, BorderLayout.CENTER);
         this.setUndecorated(false);
         initialize();
         /*to avoid problems with graphics focus controller is added here*/
@@ -148,23 +148,11 @@ public class GameFrame extends JFrame implements WindowFocusListener {
     @Override
     public void windowLostFocus(WindowEvent windowEvent) {
         if (gaming)
-            getGameBoard().onLostFocus();
+            gameController.onLostFocus();
 
     }
 
-    /**
-     * Getter for gameBoard object
-     */
-    public GameBoard getGameBoard() {
-        return gameBoard;
-    }
 
-    /**
-     * Setter for gameBoard object
-     */
-    public void setGameBoard(GameBoard gameBoard) {
-        this.gameBoard = gameBoard;
-    }
 
     /**
      * Getter for homeMenu object
@@ -191,7 +179,15 @@ public class GameFrame extends JFrame implements WindowFocusListener {
     public void setGameInfo(Info gameInfo) {
         this.gameInfo = gameInfo;
     }
-/*
+
+    public GameView getGameView() {
+        return gameView;
+    }
+
+    public void setGameView(GameView gameView) {
+        this.gameView = gameView;
+    }
+
     public GameController getGameController() {
         return gameController;
     }
@@ -200,5 +196,4 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         this.gameController = gameController;
     }
 
-*/
 }

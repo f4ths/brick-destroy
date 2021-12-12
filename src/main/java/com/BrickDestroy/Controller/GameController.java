@@ -1,8 +1,9 @@
-/*
+
 package com.BrickDestroy.Controller;
 
 import com.BrickDestroy.Model.*;
-import com.BrickDestroy.View.GameBoardView;
+import com.BrickDestroy.View.GameFrame;
+import com.BrickDestroy.View.GameView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,85 +11,55 @@ import java.awt.event.*;
 
 public class GameController extends JComponent implements KeyListener, MouseListener, MouseMotionListener {
 
-    private static final int DEF_WIDTH = 600;
-    private static final int DEF_HEIGHT = 450;
-
-    private static final int TEXT_SIZE = 30;
-
+    private GameFrame owner;
     private Timer gameTimer;
-    private final CountdownTimer timer = new CountdownTimer();
-
-    private boolean showPauseMenu;
-
-    private Font menuFont;
-
-    private Rectangle continueButtonRect;
-    private Rectangle exitButtonRect;
-    private Rectangle restartButtonRect;
-    private int strLen;
-
-    private DebugConsole debugConsole;
-
     private Wall wall;
+    private GameView gameView;
 
-    private final GameBoardView gameView;
+    public GameController(GameFrame owner, GameView gameView){
 
-    public GameController(JFrame owner){
-        super();
-
-        strLen = 0;
-        showPauseMenu = false;
-        setMenuFont(new Font("Monospaced", Font.PLAIN, TEXT_SIZE));
-
+        this.gameView = gameView;
+        this.owner = owner;
+        setWall(new Wall(new Rectangle(0, 0, GameView.getDefWidth(), GameView.getDefHeight()), 30, 3, 6 * 0.5, new Point(300, 430)));
         this.initialize();
-        setWall(new Wall(new Rectangle(0, 0, DEF_WIDTH, DEF_HEIGHT), 30, 3, 6 * 0.5, new Point(300, 430)));
-
-        setDebugConsole(new DebugConsole(owner, getWall(), this));
-        //initialize the first level
-        getWall().nextLevel();
-
-        setGameTimer();
-
-        gameView = new GameBoardView(wall);
-        this.add(gameView);
+        this.setGameTimer();
 
     }
 
-
     private void setGameTimer() {
         gameTimer = new Timer(10, e -> {
-            getWall().move();
-            getWall().findImpacts();
-            gameView.setTimerString("Remaining Time:" + timer.getTimer());
+            gameView.getWall().move();
+            gameView.getWall().findImpacts();
+            gameView.setTimerString("Remaining Time:" + gameView.getCountdown().getTimer());
             gameView.setScoreCount("Score: ");
-            gameView.setMessage(String.format("Bricks: %d Balls %d", getWall().getBrickCount(), getWall().getBallCount()));
+            gameView.setMessage(String.format("Bricks: %d Balls %d", gameView.getWall().getBrickCount(), gameView.getWall().getBallCount()));
 
-            timer.startTimer();
-            if(timer.getTimer() == 0){
-                wall.wallReset();
-                wall.ballReset();
-                timer.resetTimer();
+            gameView.getCountdown().startTimer();
+            if(gameView.getCountdown().getTimer() == 0){
+                gameView.getWall().wallReset();
+                gameView.getWall().ballReset();
+                gameView.getCountdown().resetTimer();
                 gameTimer.stop();
                 gameView.setMessage("Game Over");
 
             }
 
-            if (getWall().isBallLost()) {
-                timer.stopTimer();
-                if (getWall().ballEnd()) {
-                    getWall().wallReset();
+            if (gameView.getWall().isBallLost()) {
+                gameView.getCountdown().stopTimer();
+                if (gameView.getWall().ballEnd()) {
+                    gameView.getWall().wallReset();
                     gameView.setMessage("Game Over");
                 }
-                getWall().ballReset();
+                gameView.getWall().ballReset();
                 gameTimer.stop();
 
-            } else if (getWall().isDone()) {
-                if (getWall().hasLevel()) {
+            } else if (gameView.getWall().isDone()) {
+                if (gameView.getWall().hasLevel()) {
                     gameView.setMessage("Go to Next Level");
                     gameTimer.stop();
-                    getWall().ballReset();
-                    getWall().wallReset();
-                    getWall().nextLevel();
+                    gameView.getWall().ballReset();
+                    gameView.getWall().wallReset();
+                    gameView.getWall().nextLevel();
 
                 } else {
                     gameView.setMessage("ALL WALLS DESTROYED");
@@ -96,17 +67,17 @@ public class GameController extends JComponent implements KeyListener, MouseList
                 }
             }
 
-            repaint();
+            gameView.repaint();
         });
     }
 
     private void initialize() {
-        this.setPreferredSize(new Dimension(DEF_WIDTH, DEF_HEIGHT));
+        gameView.setPreferredSize(new Dimension(GameView.getDefWidth(), GameView.getDefHeight()));
         this.setFocusable(true);
         this.requestFocusInWindow();
         this.addKeyListener(this);
-        this.addMouseListener(this);
-        this.addMouseMotionListener(this);
+        gameView.addMouseListener(this);
+        gameView.addMouseMotionListener(this);
     }
 
     @Override
@@ -117,18 +88,18 @@ public class GameController extends JComponent implements KeyListener, MouseList
     public void keyPressed(KeyEvent keyEvent) {
         switch (keyEvent.getKeyCode()) {
             case KeyEvent.VK_A:
-                getWall().getPlayer().movePlayerLeft();
+                gameView.getWall().getPlayer().movePlayerLeft();
                 break;
             case KeyEvent.VK_D:
-                getWall().getPlayer().movePLayerRight();
+                gameView.getWall().getPlayer().movePLayerRight();
                 break;
             case KeyEvent.VK_ESCAPE:
-                showPauseMenu = !showPauseMenu;
-                repaint();
+                gameView.setShowPauseMenu(!gameView.isShowPauseMenu());
+                gameView.repaint();
                 gameTimer.stop();
                 break;
             case KeyEvent.VK_SPACE:
-                if (!showPauseMenu)
+                if (!gameView.isShowPauseMenu())
                     if (gameTimer.isRunning())
                         gameTimer.stop();
                     else
@@ -136,32 +107,32 @@ public class GameController extends JComponent implements KeyListener, MouseList
                 break;
             case KeyEvent.VK_F1:
                 if (keyEvent.isAltDown() && keyEvent.isShiftDown())
-                    getDebugConsole().setVisible(true);
+                    gameView.getDebugConsole().setVisible(true);
             default:
-                getWall().getPlayer().stop();
+                gameView.getWall().getPlayer().stop();
         }
     }
 
     @Override
     public void keyReleased(KeyEvent keyEvent) {
-        getWall().getPlayer().stop();
+        gameView.getWall().getPlayer().stop();
     }
 
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         Point p = mouseEvent.getPoint();
-        if (!showPauseMenu)
+        if (!gameView.isShowPauseMenu())
             return;
-        if (continueButtonRect.contains(p)) {
-            showPauseMenu = false;
-            repaint();
-        } else if (restartButtonRect.contains(p)) {
+        if (gameView.getContinueButtonRect().contains(p)) {
+            gameView.setShowPauseMenu(false);
+            gameView.repaint();
+        } else if (gameView.getRestartButtonRect().contains(p)) {
             gameView.setMessage("Restarting Game...");
-            getWall().ballReset();
-            getWall().wallReset();
-            showPauseMenu = false;
-            repaint();
-        } else if (exitButtonRect.contains(p)) {
+            gameView.getWall().ballReset();
+            gameView.getWall().wallReset();
+            gameView.setShowPauseMenu(false);
+            gameView.repaint();
+        } else if (gameView.getExitButtonRect().contains(p)) {
             System.exit(0);
         }
 
@@ -195,8 +166,8 @@ public class GameController extends JComponent implements KeyListener, MouseList
     @Override
     public void mouseMoved(MouseEvent mouseEvent) {
         Point p = mouseEvent.getPoint();
-        if (exitButtonRect != null && showPauseMenu) {
-            if (exitButtonRect.contains(p) || continueButtonRect.contains(p) || restartButtonRect.contains(p))
+        if (gameView.getExitButtonRect() != null && gameView.isShowPauseMenu()) {
+            if (gameView.getExitButtonRect().contains(p) || gameView.getContinueButtonRect().contains(p) || gameView.getRestartButtonRect().contains(p))
                 this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             else
                 this.setCursor(Cursor.getDefaultCursor());
@@ -208,28 +179,13 @@ public class GameController extends JComponent implements KeyListener, MouseList
     public void onLostFocus() {
         gameTimer.stop();
         gameView.setMessage("Focus Lost");
-        repaint();
+        gameView.repaint();
     }
 
-    public DebugConsole getDebugConsole() {
-        return debugConsole;
-    }
-
-    public void setDebugConsole(DebugConsole debugConsole) {
-        this.debugConsole = debugConsole;
-    }
-
-    public Wall getWall() {
-        return wall;
-    }
 
     public void setWall(Wall wall) {
         this.wall = wall;
     }
 
-    public void setMenuFont(Font menuFont) {
-        this.menuFont = menuFont;
-    }
 
 }
-*/

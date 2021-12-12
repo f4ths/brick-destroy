@@ -17,7 +17,7 @@
  */
 package com.BrickDestroy;
 
-import com.BrickDestroy.Controller.GameFrame;
+import com.BrickDestroy.View.GameFrame;
 
 import java.awt.*;
 

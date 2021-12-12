@@ -17,8 +17,6 @@
  */
 package com.BrickDestroy.View;
 
-import com.BrickDestroy.Controller.GameFrame;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;

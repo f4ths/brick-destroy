@@ -19,6 +19,7 @@ package com.BrickDestroy.Controller;
 
 import com.BrickDestroy.Model.Ball;
 import com.BrickDestroy.Model.Wall;
+import com.BrickDestroy.View.GameView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,7 +40,7 @@ public class DebugConsole extends JDialog implements WindowListener {
 
     private JFrame owner;
     private DebugPanel debugPanel;
-    private GameBoard gameBoard;
+    private GameView gameView;
     //private GameController gameController;
     private Wall wall;
 
@@ -48,11 +49,11 @@ public class DebugConsole extends JDialog implements WindowListener {
      * Takes in the owner, wall, and gameBoard and is called in gameBoard.
      *
      */
-    public DebugConsole(JFrame owner, Wall wall, GameBoard gameBoard) {
+    public DebugConsole(JFrame owner, Wall wall, GameView gameView) {
 
         this.setWall(wall);
         this.setOwner(owner);
-        this.setGameBoard(gameBoard);
+        this.setGameView(gameView);
         initialize();
 
         setDebugPanel(new DebugPanel(wall));
@@ -94,7 +95,7 @@ public class DebugConsole extends JDialog implements WindowListener {
      */
     @Override
     public void windowClosing(WindowEvent windowEvent) {
-        getGameBoard().repaint();
+        gameView.repaint();
     }
 
     /**
@@ -148,16 +149,16 @@ public class DebugConsole extends JDialog implements WindowListener {
         this.debugPanel = debugPanel;
     }
 
-    public void setGameBoard(GameBoard gameBoard) {
-        this.gameBoard = gameBoard;
+    public void setGameView(GameView gameView) {
+        this.gameView = gameView;
     }
 
     public DebugPanel getDebugPanel() {
         return debugPanel;
     }
 
-    public GameBoard getGameBoard() {
-        return gameBoard;
+    public GameView getGameView() {
+        return gameView;
     }
 
     public Wall getWall() {

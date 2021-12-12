@@ -79,7 +79,9 @@ abstract public class Ball {
     }
 
     /**
-     * This method updates a ball's location after its coordinates have been changed. It updates the space that the ball occupies in the new defined location.
+     * This method updates a ball's location after its coordinates have been changed.
+     * It updates the space that the ball occupies in the new defined location.
+     * This method have been extracted and reworked from moveTo and move since both these methods had repeated lines.
      */
     private void updateLocation() {
         RectangularShape tmp = (RectangularShape) ballFace;
@@ -94,6 +96,7 @@ abstract public class Ball {
 
     /**
      * This method defines a ball's directional points - up, down, left, right.
+     * This method was previously repeated lines in the constructor and updateLocation(), so it has been extracted as refactoring.
      *
      * @param width Used to calculate the ball's up and down location.
      * @param height Used to calculate the ball's left and right location.

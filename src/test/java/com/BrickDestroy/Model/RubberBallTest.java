@@ -10,7 +10,9 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 
-
+/**
+ * Junit test for RubberBall. Only one method could be tested
+ */
 class RubberBallTest {
 
     private final Point2D center = new Point.Double(20,20);
@@ -22,6 +24,9 @@ class RubberBallTest {
         testRubberBall = new RubberBall(center);
     }
 
+    /**
+     * Asserts that this method returns an Ellipse2D object in location (19, 19) and has a width and height of 2.
+     */
     @Test
     void testMakeBall() {
 

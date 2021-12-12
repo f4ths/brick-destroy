@@ -9,6 +9,10 @@ import java.awt.geom.Point2D;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Junit test for Ball class.
+ * Public methods tested.
+ */
 class BallTest {
 
     private final Point2D CENTER = new Point(20, 20);
@@ -19,7 +23,9 @@ class BallTest {
 
     private Ball testBall;
 
-
+    /**
+     * Generates a ball object with the same values before every test method.
+     */
     @BeforeEach
     void setUp() {
         testBall = new Ball(CENTER, WIDTH, HEIGHT, INNER, BORDER) {
@@ -33,6 +39,10 @@ class BallTest {
         };
     }
 
+    /**
+     * Tests that when move() is called, the speed of the ball is added to the location of the ball.
+     * Asserts for both x and y in the same test for efficiency.
+     */
     @Test
     void whenMoveAddSpeedToCenter() {
         testBall.setCenter(new Point (0,0));
@@ -47,6 +57,9 @@ class BallTest {
         assertEquals(y, testBall.getCenter().getY());
     }
 
+    /**
+     * Tests that the correct speed is set to x and y values.
+     */
     @Test
     void testSetSpeed() {
         int x = 23;
@@ -57,6 +70,9 @@ class BallTest {
         assertEquals(y, testBall.getSpeedY());
     }
 
+    /**
+     * Tests that correct x value is set.
+     */
     @Test
     void testSetXSpeed() {
         int x = 9;
@@ -65,6 +81,9 @@ class BallTest {
         assertEquals(x, testBall.getSpeedX());
     }
 
+    /**
+     * Tests that correct y value is set.
+     */
     @Test
     void testSetYSpeed() {
         int y = 8;
@@ -73,8 +92,11 @@ class BallTest {
         assertEquals(y, testBall.getSpeedY());
     }
 
+    /**
+     * Tests that x value is multiplied by -1.
+     */
     @Test
-    void testReverse() {
+    void testReverseX() {
         int x = 22;
         testBall.setXSpeed(x);
 
@@ -83,6 +105,9 @@ class BallTest {
         assertEquals(-x, testBall.getSpeedX());
     }
 
+    /**
+     * Tests that y value is multiplied by -1.
+     */
     @Test
     void testReverseY() {
         int y = 2;
@@ -93,6 +118,9 @@ class BallTest {
         assertEquals(-y, testBall.getSpeedY());
     }
 
+    /**
+     * Tests that the correct border color has been set.
+     */
     @Test
     void testSetBorderColor() {
 
@@ -103,6 +131,9 @@ class BallTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * Tests that the correct inner color has been set
+     */
     @Test
     void testSetInnerColor() {
 
@@ -113,6 +144,9 @@ class BallTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * Tests that correct coordinate has been returned.
+     */
     @Test
     void testGetCenter() {
 
@@ -121,6 +155,9 @@ class BallTest {
         assertEquals(CENTER, result);
     }
 
+    /**
+     * Tests that the correct coordinate has been set.
+     */
     @Test
     void testSetCenter() {
         final Point2D expected = new Point(10,20);
@@ -130,6 +167,9 @@ class BallTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * Tests that the ball has been set to a new location.
+     */
     @Test
     void testMoveTo() {
         final Point p = new Point(30, 30);

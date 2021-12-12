@@ -2,11 +2,21 @@
 package com.BrickDestroy.View;
 
 import com.BrickDestroy.Controller.DebugConsole;
+import com.BrickDestroy.Controller.GameController;
 import com.BrickDestroy.Model.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.font.FontRenderContext;
+
+/**
+ * GameView has been separated from GameBoard to accomplish single responsibility and MVC.
+ * This class handles the view methods from GameBoard.
+ *
+ * @author Fathan
+ * @version 2.0
+ * @see GameController
+ */
 
 public class GameView extends JComponent {
 
@@ -41,6 +51,9 @@ public class GameView extends JComponent {
 
     private DebugConsole debugConsole;
 
+    /**
+     * The constructor for GameView creates a new wall object, sets the environment, and sets the wall to the next level.
+     */
     public GameView(JFrame owner) {
         super();
 
@@ -59,14 +72,10 @@ public class GameView extends JComponent {
 
     }
 
-    public static int getDefWidth() {
-        return DEF_WIDTH;
-    }
-
-    public static int getDefHeight() {
-        return DEF_HEIGHT;
-    }
-
+    /**
+     * Gets score from wall object and displays it.
+     * Sets the color, font, and size of the text.
+     */
     public void paint(Graphics g) {
 
         Graphics2D g2d = (Graphics2D) g;
@@ -98,6 +107,10 @@ public class GameView extends JComponent {
         Toolkit.getDefaultToolkit().sync();
     }
 
+    /**
+     * Gets score from wall object and displays it.
+     * Sets the color, font, and size of the text.
+     */
     private void showScore(Graphics g){
         int score = getWall().getScore();
         g.setColor(Color.WHITE);
@@ -105,6 +118,9 @@ public class GameView extends JComponent {
         g.drawString(String.valueOf(score),550,420);
     }
 
+    /**
+     * Clears screen of any graphic components.
+     */
     private void clear(Graphics2D g2d) {
         Color tmp = g2d.getColor();
         g2d.setColor(BG_COLOR);
@@ -112,6 +128,10 @@ public class GameView extends JComponent {
         g2d.setColor(tmp);
     }
 
+    /**
+     * Method to draw and display the brick object.
+     * @param brick Brick object to be drawn.
+     */
     private void drawBrick(Brick brick, Graphics2D g2d) {
         Color tmp = g2d.getColor();
 
@@ -124,6 +144,10 @@ public class GameView extends JComponent {
         g2d.setColor(tmp);
     }
 
+    /**
+     * Method to draw and display the ball object.
+     * @param ball Ball object to be drawn.
+     */
     private void drawBall(Ball ball, Graphics2D g2d) {
         Color tmp = g2d.getColor();
 
@@ -138,6 +162,10 @@ public class GameView extends JComponent {
         g2d.setColor(tmp);
     }
 
+    /**
+     * Method to draw and display the player object.
+     * @param p Player object to be drawn.
+     */
     private void drawPlayer(Player p, Graphics2D g2d) {
         Color tmp = g2d.getColor();
 
@@ -151,11 +179,18 @@ public class GameView extends JComponent {
         g2d.setColor(tmp);
     }
 
+    /**
+     * Method to draw and display home menu by hiding the gameBoard.
+     */
     private void drawMenu(Graphics2D g2d) {
         obscureGameBoard(g2d);
         drawPauseMenu(g2d);
     }
 
+    /**
+     * Obscures the gameBoard by removing from view and disabling any user inputs to the gameBoard.
+     * Called when a menu is being shown.
+     */
     private void obscureGameBoard(Graphics2D g2d) {
 
         Composite tmp = g2d.getComposite();
@@ -171,6 +206,10 @@ public class GameView extends JComponent {
         g2d.setColor(tmpColor);
     }
 
+    /**
+     * Method to draw and display the pause menu.
+     * The pause menu allows user to continue the game, to restart the game, or to exit the game.
+     */
     private void drawPauseMenu(Graphics2D g2d) {
         Font tmpFont = g2d.getFont();
         Color tmpColor = g2d.getColor();
@@ -224,67 +263,113 @@ public class GameView extends JComponent {
         g2d.setColor(tmpColor);
     }
 
+    /**
+     * Getter for menuFont
+     */
     public Font getMenuFont() {
         return menuFont;
     }
 
-
+    /**
+     * Getter for exit button rectangle
+     */
     public Rectangle getExitButtonRect() {
         return exitButtonRect;
     }
 
+    /**
+     * Setter for exit button rectangle
+     */
     public void setExitButtonRect(Rectangle exitButtonRect) {
         this.exitButtonRect = exitButtonRect;
     }
 
+    /**
+     * Getter for continue button rectangle
+     */
     public Rectangle getContinueButtonRect() {
         return continueButtonRect;
     }
 
+    /**
+     * Setter for continue button rectangle
+     */
     public void setContinueButtonRect(Rectangle continueButtonRect) {
         this.continueButtonRect = continueButtonRect;
     }
 
+    /**
+     * Getter for restart button rectangle
+     */
     public Rectangle getRestartButtonRect() {
         return restartButtonRect;
     }
 
+    /**
+     * Setter for restart button rectangle
+     */
     public void setRestartButtonRect(Rectangle restartButtonRect) {
         this.restartButtonRect = restartButtonRect;
     }
 
+    /**
+     * Getter for strLen
+     */
     public int getStrLen() {
         return strLen;
     }
 
+    /**
+     * Setter for strLen
+     */
     public void setStrLen(int strLen) {
         this.strLen = strLen;
     }
 
+    /**
+     * Getter for message
+     */
     public String getMessage() {
         return message;
     }
 
+    /**
+     * Setter for message
+     */
     public void setMessage(String message) {
         this.message = message;
     }
-
+    /**
+     * Getter for scoreCount
+     */
     public String getScoreCount() {
         return scoreCount;
     }
 
+    /**
+     * Setter for scoreCount
+     */
     public void setScoreCount(String scoreCount) {
         this.scoreCount = scoreCount;
     }
 
+    /**
+     * Getter for timerString
+     */
     public String getTimerString() {
         return timerString;
     }
 
+    /**
+     * Setter for timerString
+     */
     public void setTimerString(String timerString) {
         this.timerString = timerString;
     }
 
+    /**
+     * Getter for Wall
+     */
     public Wall getWall() {
         return wall;
     }
@@ -293,28 +378,66 @@ public class GameView extends JComponent {
         this.wall = wall;
     }
 
+    /**
+     * Setter for menuFont
+     */
     public void setMenuFont(Font menuFont) {
         this.menuFont = menuFont;
     }
 
+    /**
+     * Getter for debugConsole
+     * @return debugConsole object
+     */
     public DebugConsole getDebugConsole() {
         return debugConsole;
     }
 
+    /**
+     * Setter for debugConsole object
+     * @param debugConsole Object to be changed
+     */
     public void setDebugConsole(DebugConsole debugConsole) {
         this.debugConsole = debugConsole;
     }
 
+    /**
+     * Getter for showPauseMenu
+     * @return showPauseMenu
+     */
     public boolean isShowPauseMenu() {
         return showPauseMenu;
     }
 
+    /**
+     * Setter for showPauseMenu
+     * @param showPauseMenu Object To be changed
+     */
     public void setShowPauseMenu(boolean showPauseMenu) {
         this.showPauseMenu = showPauseMenu;
     }
 
-
+    /**
+     * Getter for countdown timer
+     * @return countdown timer
+     */
     public CountdownTimer getCountdown() {
         return countdown;
+    }
+
+    /**
+     * Getter for DEF_WIDTH
+     * @return DEF_WIDTH constant
+     */
+    public static int getDefWidth() {
+        return DEF_WIDTH;
+    }
+
+    /**
+     * Getter for DEF_HEIGHT
+     * @return DEF_HEIGHT constant
+     */
+    public static int getDefHeight() {
+        return DEF_HEIGHT;
     }
 }

@@ -2,30 +2,52 @@
 package com.BrickDestroy.Controller;
 
 import com.BrickDestroy.Model.*;
-import com.BrickDestroy.View.GameFrame;
 import com.BrickDestroy.View.GameView;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * GameController has been separated from GameBoard to accomplish single responsibility and MVC.
+ * This class handles user input and the GameBoard logic.
+ *
+ * @author Fathan
+ * @version 2.0
+ * @see GameView
+ */
 public class GameController extends JComponent implements KeyListener, MouseListener, MouseMotionListener {
 
-    private GameFrame owner;
     private Timer gameTimer;
-    private Wall wall;
     private GameView gameView;
 
-    public GameController(GameFrame owner, GameView gameView){
+    /**
+     * This is the constructor for gameController.
+     * gameView gets passed in order to allow it to be connected to the game logic.
+     * Initialises the game to allow user input to be made.
+     * Starts the game timer.
+     *
+     * @param gameView Passed to connect the view of the game to the logic.
+     */
+    public GameController(GameView gameView){
 
         this.gameView = gameView;
-        this.owner = owner;
-        setWall(new Wall(new Rectangle(0, 0, GameView.getDefWidth(), GameView.getDefHeight()), 30, 3, 6 * 0.5, new Point(300, 430)));
         this.initialize();
         this.setGameTimer();
 
     }
 
+    /**
+     * This method deals with the game's timer logic.
+     * This has been separated from the constructor to de-clutter it.
+     * The timer starts as the components from wall moves, and impacts between objects are looked for.
+     * It also prints the initial ballCount, brickCount, time remaining, and user score.
+     *
+     * When the timer reaches 0, the brick, player, and ball objects are reset and the program displays a Game Over text.
+     * When no balls are remaining, Game Over text is shown.
+     * When all bricks in one level have been broken, go to the next level of bricks and reset player and ball position.
+     * When all bricks in the final level have been broken, display "All walls destroyed" and stop the game timer.
+     */
     private void setGameTimer() {
         gameTimer = new Timer(10, e -> {
             gameView.getWall().move();
@@ -71,6 +93,10 @@ public class GameController extends JComponent implements KeyListener, MouseList
         });
     }
 
+    /**
+     * Initialises gameBoard
+     * Set dimension, request for window focus, enable user input.
+     */
     private void initialize() {
         gameView.setPreferredSize(new Dimension(GameView.getDefWidth(), GameView.getDefHeight()));
         this.setFocusable(true);
@@ -80,10 +106,23 @@ public class GameController extends JComponent implements KeyListener, MouseList
         gameView.addMouseMotionListener(this);
     }
 
+    /**
+     * Unused in game but is required to be defined to implement keyboardListener.
+     */
     @Override
     public void keyTyped(KeyEvent keyEvent) {
     }
 
+    /**
+     * Takes in user keyboard inputs when the key goes down.
+     * A moves the player to the left.
+     * D moves the player to the right.
+     * Escape displays the pause menu.
+     * Space freezes/pauses the game.
+     * Shift + Alt + F1 displays the debug window.
+     *
+     * @param keyEvent Keyboard input.
+     */
     @Override
     public void keyPressed(KeyEvent keyEvent) {
         switch (keyEvent.getKeyCode()) {
@@ -112,12 +151,24 @@ public class GameController extends JComponent implements KeyListener, MouseList
                 gameView.getWall().getPlayer().stop();
         }
     }
-
+    /**
+     * When key goes up, stops player movement.
+     * @param keyEvent Keyboard input.
+     */
     @Override
     public void keyReleased(KeyEvent keyEvent) {
         gameView.getWall().getPlayer().stop();
     }
 
+    /**
+     * Takes in user mouse input when the mouse is both pressed and released.
+     * Mouse input only looked at during pause menu.
+     * When continue button is clicked, return to game.
+     * When restart button is clicked, resets the level.
+     * When exit button is clicked, exit game.
+     *
+     * @param mouseEvent Mouse input.
+     */
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         Point p = mouseEvent.getPoint();
@@ -138,6 +189,9 @@ public class GameController extends JComponent implements KeyListener, MouseList
 
     }
 
+    /**
+     * Most MouseEvent methods are unused but must be defined in order to use MouseListener.
+     */
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
 
@@ -163,6 +217,10 @@ public class GameController extends JComponent implements KeyListener, MouseList
 
     }
 
+    /**
+     * Switches the mouse cursor to a hand pointer when it is hovering over any clickable buttons in pause menu.
+     * @param mouseEvent Mouse cursor.
+     */
     @Override
     public void mouseMoved(MouseEvent mouseEvent) {
         Point p = mouseEvent.getPoint();
@@ -176,15 +234,13 @@ public class GameController extends JComponent implements KeyListener, MouseList
         }
     }
 
+    /**
+     * Freezes the game when window is not focused on.
+     */
     public void onLostFocus() {
         gameTimer.stop();
         gameView.setMessage("Focus Lost");
         gameView.repaint();
-    }
-
-
-    public void setWall(Wall wall) {
-        this.wall = wall;
     }
 
 
